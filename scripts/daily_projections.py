@@ -81,6 +81,10 @@ def main():
         sp = g[(g.market == "spreads") & (g.outcome == "home")]; tt = g[(g.market == "totals") & (g.outcome == "Over")]
         cons_s = sp.point.median() if len(sp) else np.nan; cons_t = tt.point.median() if len(tt) else np.nan
         s_edge = margin + cons_s; t_edge = total - cons_t
+        rng_s = f"{sp.point.min():+g} to {sp.point.max():+g}" if len(sp) else "-"; rng_t = f"{tt.point.min():g} to {tt.point.max():g}" if len(tt) else "-"
+        bov_s = sp[sp.book == "bovada"].point; bov_t = tt[tt.book == "bovada"].point
+        e_bov_s = round(margin + bov_s.iloc[0], 1) if len(bov_s) else np.nan; e_bov_t = round(total - bov_t.iloc[0], 1) if len(bov_t) else np.nan
+        nbooks = int(sp.book.nunique())
         s_side = "HOME" if s_edge >= MIN_EDGE else ("AWAY" if s_edge <= -MIN_EDGE else "no flag")
         t_side = "OVER" if t_edge >= MIN_EDGE else ("UNDER" if t_edge <= -MIN_EDGE else "no flag")
         def best(side):
@@ -103,7 +107,7 @@ def main():
             if len(x): notes = "; ".join(sorted({f"{r.team} {r.player} {r.status}" for r in x.itertuples()}))
         tip = pd.Timestamp(commence).tz_convert(ET).strftime("%I:%M %p")
         rows.append({"tip_et": tip, "game": f"{away} @ {home}", "model_home_margin": round(margin, 1), "model_total": round(total, 1),
-                     "consensus_home_spread": cons_s, "consensus_total": cons_t, "spread_edge": round(s_edge, 1), "spread_flag": s_side,
+                     "consensus_home_spread": cons_s, "consensus_total": cons_t, "spread_range": rng_s, "total_range": rng_t, "n_books": nbooks, "spread_edge_bovada": e_bov_s, "total_edge_bovada": e_bov_t, "spread_edge": round(s_edge, 1), "spread_flag": s_side,
                      "best_bettable_spread": best(s_side), "total_edge": round(t_edge, 1), "total_flag": t_side, "best_bettable_total": best_t(t_side),
                      "bovada_spread_total": book_line("bovada"), "draftkings_spread_total": book_line("draftkings"),
                      "games_played_home_away": f"{int(h.gp)}/{int(w.gp)}", "injury_report_out": notes})
@@ -114,12 +118,13 @@ def main():
          "**NOT A RECOMMENDATION. The v1 model has no demonstrated edge**: it failed its signed 2025-26 confirmation test and wins about 50% against the closing line. This page only shows the model next to the market.",
          f"Market = median across all books in the snapshot taken {snap} UTC; lines move, so re-run closer to tip. Flag threshold: {MIN_EDGE} points (workbook default, not tuned).",
          "Early season: ratings are almost entirely last season's (shrinkage K=10) until teams have played several games. Injuries are shown for information only; the model does not use them.", "",
-         "| Tip (ET) | Game | Model margin (home +) | Market spread (home) | Spread edge | Spread flag | Best bettable | Model total | Market total | Total edge | Total flag | Best bettable | Bovada s/t | DraftKings s/t | Out/Doubtful |",
-         "|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|"]
+         "| Tip (ET) | Game | Model margin (home +) | Middle of market spread (home) | Spread range across books | Spread edge (vs middle) | Edge vs Bovada | Spread flag | Best bettable | Model total | Middle of market total | Total range | Total edge (vs middle) | Edge vs Bovada | Total flag | Best bettable | Bovada s/t | DraftKings s/t | Out/Doubtful |",
+         "|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|"]
     for r in df.itertuples():
-        L.append(f"| {r.tip_et} | {r.game} | {r.model_home_margin:+.1f} | {r.consensus_home_spread:+g} | {r.spread_edge:+.1f} | {r.spread_flag} | {r.best_bettable_spread} | "
-                 f"{r.model_total:.1f} | {r.consensus_total:g} | {r.total_edge:+.1f} | {r.total_flag} | {r.best_bettable_total} | {r.bovada_spread_total} | {r.draftkings_spread_total} | {r.injury_report_out} |")
-    L += ["", "Spread flag HOME/AWAY = the side the model prefers by at least the threshold; OVER/UNDER likewise for totals. Home spread is in book notation (negative = home favored)."]
+        L.append(f"| {r.tip_et} | {r.game} | {r.model_home_margin:+.1f} | {r.consensus_home_spread:+g} | {r.spread_range} | {r.spread_edge:+.1f} | {r.spread_edge_bovada:+.1f} | {r.spread_flag} | {r.best_bettable_spread} | "
+                 f"{r.model_total:.1f} | {r.consensus_total:g} | {r.total_range} | {r.total_edge:+.1f} | {r.total_edge_bovada:+.1f} | {r.total_flag} | {r.best_bettable_total} | {r.bovada_spread_total} | {r.draftkings_spread_total} | {r.injury_report_out} |")
+    L += ["", "'Middle of market' is the median across the books in the snapshot. With an even number of books it can fall between two posted numbers (for example +0.75), so it is NOT a line anyone offers: use the range and the Bovada/DraftKings columns for what you could actually get. Prices differ by book too (for example -106 to -120), which matters as much as half a point.",
+         "Spread flag HOME/AWAY = the side the model prefers by at least the threshold; OVER/UNDER likewise for totals. Home spread is in book notation (negative = home favored)."]
     (out / f"projections_{day}.md").write_text("\n".join(L), encoding="utf-8")
     print("\n".join(L))
 
