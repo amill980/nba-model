@@ -113,7 +113,9 @@ def main():
                      "games_played_home_away": f"{int(h.gp)}/{int(w.gp)}", "injury_report_out": notes})
     df = pd.DataFrame(rows).sort_values("tip_et", key=lambda s: pd.to_datetime(s, format="%I:%M %p"))
     out = ROOT / "docs/daily"; out.mkdir(parents=True, exist_ok=True)
+    df.insert(0, "report_date", day); df["snapshot_utc"] = snap
     df.to_csv(out / f"projections_{day}.csv", index=False)
+    df.to_csv(out / "latest.csv", index=False)   # stable name for the Excel live workbook (Power Query)
     L = [f"# NBA projections for {day}", "",
          "**NOT A RECOMMENDATION. The v1 model has no demonstrated edge**: it failed its signed 2025-26 confirmation test and wins about 50% against the closing line. This page only shows the model next to the market.",
          f"Market = median across all books in the snapshot taken {snap} UTC; lines move, so re-run closer to tip. Flag threshold: {MIN_EDGE} points (workbook default, not tuned).",

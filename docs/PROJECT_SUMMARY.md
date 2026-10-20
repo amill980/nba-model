@@ -16,7 +16,8 @@ An NBA betting model built Excel-first (`NBA_Model.xlsx`, rebuilt by `scripts/bu
 
 ## 3. Layout
 ```
-NBA_Model.xlsx           research workbook (no macros); README tab explains each tab
+NBA_Model.xlsx           research workbook (no macros, rebuilt by build_workbook.py; static snapshot); README tab explains each tab
+NBA_Live.xlsx            live view: Power Query tabs (Today, Odds, Injuries, Results, Health) that read the daily CSVs; Data > Refresh All. Rebuilt by scriptsuild_live_workbook.ps1 (needs desktop Excel); not tracked in git
 scripts\                 fetch_*.py (data), prep_backtest.py / opp_adjust.py / tune_v1.py (backtest),
                          run_confirmation.py (run once; lock file), injury_v2.py / eval_injury_v2.py,
                          archive_odds.py / archive_injuries.py / load_odds_archive.py / parse_injuries.py (live collection),
