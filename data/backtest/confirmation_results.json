@@ -1,0 +1,70 @@
+{
+  "n_games": 1224,
+  "books": {
+    "DraftKings": 927,
+    "ESPN BET": 297
+  },
+  "T1 spread": {
+    "n_bets": 485,
+    "mean_clv": 0.3525773195876289,
+    "perm_p": 0.0005999400059994001,
+    "ci95": [
+      0.16231683168316832,
+      0.5513870796038715
+    ],
+    "holm_p": 0.0011998800119988001,
+    "PASS": false
+  },
+  "T2 total": {
+    "n_bets": 706,
+    "mean_clv": 0.026912181303116147,
+    "perm_p": 0.2521747825217478,
+    "ci95": [
+      -0.2055316091954023,
+      0.25148553037557186
+    ],
+    "holm_p": 0.2521747825217478,
+    "PASS": false
+  },
+  "secondary": {
+    "spread": {
+      "open_win": "234/485 = 0.4825",
+      "open_z_vs_breakeven": -1.8226987005405488,
+      "close_win": "240/485 = 0.4948"
+    },
+    "total": {
+      "open_win": "363/706 = 0.5142",
+      "open_z_vs_breakeven": -0.5131417422039137,
+      "close_win": "349/706 = 0.4943"
+    },
+    "spread CLV, book=ESPN BET": "n=128 mean=0.734",
+    "spread CLV, book=DraftKings": "n=357 mean=0.216",
+    "total CLV, book=ESPN BET": "n=184 mean=-0.174",
+    "total CLV, book=DraftKings": "n=522 mean=0.098",
+    "spread CLV, month=2025-10": "n=36 mean=0.639",
+    "spread CLV, month=2025-11": "n=92 mean=0.772",
+    "spread CLV, month=2025-12": "n=55 mean=0.836",
+    "spread CLV, month=2026-01": "n=74 mean=-0.027",
+    "spread CLV, month=2026-02": "n=64 mean=0.344",
+    "spread CLV, month=2026-03": "n=106 mean=-0.264",
+    "spread CLV, month=2026-04": "n=58 mean=0.672",
+    "total CLV, month=2025-10": "n=49 mean=-0.347",
+    "total CLV, month=2025-11": "n=135 mean=-0.111",
+    "total CLV, month=2025-12": "n=117 mean=0.615",
+    "total CLV, month=2026-01": "n=137 mean=-0.139",
+    "total CLV, month=2026-02": "n=105 mean=0.105",
+    "total CLV, month=2026-03": "n=106 mean=-0.104",
+    "total CLV, month=2026-04": "n=57 mean=-0.035",
+    "spread CLV, games played=<10 games": "n=71 mean=0.775",
+    "spread CLV, games played=>=10 games": "n=414 mean=0.280",
+    "spread CLV, games played=>=30 games": "n=312 mean=0.135",
+    "total CLV, games played=<10 games": "n=98 mean=-0.061",
+    "total CLV, games played=>=10 games": "n=608 mean=0.041",
+    "total CLV, games played=>=30 games": "n=428 mean=-0.047",
+    "spread corr(open edge, line move)": 0.12686120729559955,
+    "total corr(open edge, line move)": 0.09136146648366823,
+    "model MAE vs actual margin": 11.47061771346064,
+    "market close MAE": 10.890522875816993,
+    "market open MAE": 11.089869281045752
+  }
+}

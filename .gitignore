@@ -1,0 +1,15 @@
+# environment and caches
+.venv/
+__pycache__/
+*.pyc
+~$*
+# raw/derived data is large and rebuildable (kept out of git)
+data/*
+!data/gates/
+!data/backtest/
+data/backtest/*
+!data/backtest/confirmation_results.json
+!data/backtest/CONFIRMATION_RUN.lock
+# secrets must never be committed
+*.env
+.env*

@@ -1,0 +1,6 @@
+Season 2022-23
+G1 games=1230 rows=2460 games_without_2_rows=0
+G1 games_with_inconsistent_WL=0
+dates 2022-10-18 .. 2023-04-09 (164 game days)
+ESPN events collected=1231
+G2 matched_identical=1230 score_mismatch=0 not_found=0 of 1230 -> 1.0000
