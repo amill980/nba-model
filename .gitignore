@@ -13,3 +13,6 @@ data/backtest/*
 # secrets must never be committed
 *.env
 .env*
+
+# generated daily reports
+docs/daily/

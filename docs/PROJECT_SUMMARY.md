@@ -35,6 +35,7 @@ data\                    gitignored: raw feeds, archives, logs, health reports (
 | NBA Injury Parse | hourly | PDFs to `data/injuries/injury_status.csv` |
 | NBA Daily Fetch | 06:30 | refresh 2026-27 results, flatten odds, parse injuries |
 | NBA Health Check | 23:30 | counts only, writes `data/health/health_<date>.txt` |
+| NBA Daily Projections | 12:00, 18:40 | writes `docs/daily/projections_<today>.md` (v1 model vs market; descriptive, not a recommendation) |
 Logs: `data/logs/`. Python must be `.venv\Scripts\python.exe` (system packages are not visible to the scheduler).
 
 ## 5. Lessons learned (non-obvious)
