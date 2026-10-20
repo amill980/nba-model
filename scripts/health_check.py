@@ -5,7 +5,7 @@ last results. Writes data/health/health_<ET date>.txt and exits 1 if any flag is
 Usage: python scripts/health_check.py [--date YYYY-MM-DD]
 """
 import argparse, csv, subprocess
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from zoneinfo import ZoneInfo
 import pandas as pd
@@ -38,7 +38,29 @@ def main():
         ad = pd.read_csv(arch, usecols=["game_date_et", "event_id"]).drop_duplicates()
         games_today = int((ad.game_date_et == day).sum())
     lines.append(f"Odds: {len(today)} snapshots today ({', '.join(datetime.strptime(f.stem, '%Y%m%dT%H%M%SZ').replace(tzinfo=timezone.utc).astimezone(ET).strftime('%H:%M') for f in today)}); games seen in archive today: {games_today}")
-    if games_today and len(today) < 3: flags.append("fewer than 3 odds snapshots on a game day")
+    # scheduled-slot coverage: which of the day's planned polls produced a snapshot (gaps are accepted but recorded)
+    SLOTS = ["11:00", "13:30", "16:00", "18:30", "20:30", "22:00"]
+    snap_times = [datetime.strptime(f.stem, "%Y%m%dT%H%M%SZ").replace(tzinfo=timezone.utc).astimezone(ET) for f in today]
+    commences = []
+    if arch.exists():
+        cm = pd.read_csv(arch, usecols=["game_date_et", "commence_time_utc"]).drop_duplicates()
+        commences = [pd.Timestamp(c).tz_convert(ET).to_pydatetime() for c in cm[cm.game_date_et == day].commence_time_utc]
+    now_et = datetime.now(ET); d0 = datetime.strptime(day, "%Y-%m-%d").replace(tzinfo=ET)
+    gap_rows, missed = [], []
+    for sl in SLOTS:
+        hh, mm = map(int, sl.split(":")); t_slot = d0.replace(hour=hh, minute=mm)
+        if not commences or t_slot > now_et or not any(c >= t_slot for c in commences): continue   # not expected / not due yet
+        hit = [t for t in snap_times if t_slot - timedelta(minutes=5) <= t <= t_slot + timedelta(minutes=60)]
+        status = "ok" if hit and min(hit) <= t_slot + timedelta(minutes=15) else ("late" if hit else "MISSED")
+        gap_rows.append((day, sl, status, min(hit).strftime("%H:%M") if hit else ""))
+        if status == "MISSED": missed.append(sl)
+    lines.append("Poll slots: " + (", ".join(f"{sl}={st}" + (f"@{at}" if at else "") for _, sl, st, at in gap_rows) if gap_rows else "none due"))
+    if missed: flags.append("missed odds polls (accepted gap, recorded): " + ", ".join(missed))
+    if gap_rows:
+        gp = ROOT / "data/health/poll_gaps.csv"; gp.parent.mkdir(parents=True, exist_ok=True)
+        old = pd.read_csv(gp) if gp.exists() else pd.DataFrame(columns=["date", "slot", "status", "snapshot_at"])
+        new = pd.DataFrame(gap_rows, columns=["date", "slot", "status", "snapshot_at"])
+        pd.concat([old[old.date != day], new]).to_csv(gp, index=False)
     q = ROOT / "data/odds/quota_log.csv"
     if q.exists():
         last = list(csv.DictReader(q.open(newline="")))[-1]
@@ -70,7 +92,7 @@ def main():
         lines.append("Game log 2026-27: no games yet")
     # tasks
     for name, res, when in powershell_tasks():
-        ok = res.strip() in ("0", "267011", "267009")  # 0 ok; 267011 = never run yet; 267009 = running
+        ok = name == "NBA Health Check" or res.strip() in ("0", "267011", "267009", "267014")  # 0 ok; 267011 never run; 267009 running; 267014 stopped by system (sleep)
         lines.append(f"Task {name}: last result {res.strip()} at {when.strip()}" + ("" if ok else "  <-- FLAG"))
         if not ok: flags.append(f"task {name} last result {res.strip()}")
     lines.append("FLAGS: " + ("none" if not flags else "; ".join(flags)))

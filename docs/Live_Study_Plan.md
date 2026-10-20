@@ -44,6 +44,7 @@ Draft design:
 - Secondary (descriptive, no pass/fail): win rate versus breakeven at the price, flat 1-unit hypothetical profit and loss, by book, by report time, by event size.
 
 ## 4. Failure handling
+- Decision 2026-10-20: the user will NOT change power settings, so the laptop sleeps and polls are missed (first miss: 2026-10-20 11:00, laptop asleep 08:13-12:09). The health check records every missed or late poll slot in `data/health/poll_gaps.csv`; that file is the exclusion record for Phase B. Tasks are set to wake the computer and to retry on failure, which only helps on AC power.
 - If the odds task misses a day, it is recorded; days with missing polls are excluded by a rule written before looking (a game needs a poll at least once before and once after its report).
 - If credits drop below 100, polling stops and the period is flagged.
 - If the PDF layout changes, the parser fails loudly (rows whose team is not in the matchup, or zero rows from a non-empty file).
