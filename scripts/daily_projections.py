@@ -106,7 +106,7 @@ def main():
             x = inj[(inj.team.isin([home, away])) & inj.status.isin(["Out", "Doubtful"]) & (pd.to_datetime(inj.game_date, format="%m/%d/%Y").dt.strftime("%Y-%m-%d") == day)]
             if len(x): notes = "; ".join(sorted({f"{r.team} {r.player} {r.status}" for r in x.itertuples()}))
         tip = pd.Timestamp(commence).tz_convert(ET).strftime("%I:%M %p")
-        rows.append({"tip_et": tip, "game": f"{away} @ {home}", "model_home_margin": round(margin, 1), "model_total": round(total, 1),
+        rows.append({"tip_et": tip, "game": f"{away} @ {home}", "model_line": f"{home} {-margin:+.1f}", "market_line": f"{home} {cons_s:+g}", "model_home_margin": round(margin, 1), "model_total": round(total, 1),
                      "consensus_home_spread": cons_s, "consensus_total": cons_t, "spread_range": rng_s, "total_range": rng_t, "n_books": nbooks, "spread_edge_bovada": e_bov_s, "total_edge_bovada": e_bov_t, "spread_edge": round(s_edge, 1), "spread_flag": s_side,
                      "best_bettable_spread": best(s_side), "total_edge": round(t_edge, 1), "total_flag": t_side, "best_bettable_total": best_t(t_side),
                      "bovada_spread_total": book_line("bovada"), "draftkings_spread_total": book_line("draftkings"),
@@ -114,18 +114,21 @@ def main():
     df = pd.DataFrame(rows).sort_values("tip_et", key=lambda s: pd.to_datetime(s, format="%I:%M %p"))
     out = ROOT / "docs/daily"; out.mkdir(parents=True, exist_ok=True)
     df.insert(0, "report_date", day); df["snapshot_utc"] = snap
-    df.to_csv(out / f"projections_{day}.csv", index=False)
-    df.to_csv(out / "latest.csv", index=False)   # stable name for the Excel live workbook (Power Query)
+    for fn in (f"projections_{day}.csv", "latest.csv"):
+        try: df.to_csv(out / fn, index=False)
+        except PermissionError: print(f"WARNING: {fn} is open in another program (probably Excel); close it and re-run to update that file.")
+      # stable name for the Excel live workbook (Power Query)
     L = [f"# NBA projections for {day}", "",
          "**NOT A RECOMMENDATION. The v1 model has no demonstrated edge**: it failed its signed 2025-26 confirmation test and wins about 50% against the closing line. This page only shows the model next to the market.",
          f"Market = median across all books in the snapshot taken {snap} UTC; lines move, so re-run closer to tip. Flag threshold: {MIN_EDGE} points (workbook default, not tuned).",
          "Early season: ratings are almost entirely last season's (shrinkage K=10) until teams have played several games. Injuries are shown for information only; the model does not use them.", "",
-         "| Tip (ET) | Game | Model margin (home +) | Middle of market spread (home) | Spread range across books | Spread edge (vs middle) | Edge vs Bovada | Spread flag | Best bettable | Model total | Middle of market total | Total range | Total edge (vs middle) | Edge vs Bovada | Total flag | Best bettable | Bovada s/t | DraftKings s/t | Out/Doubtful |",
+         "| Tip (ET) | Game | Model line (home) | Market line (home, middle) | Spread range across books | Spread edge (vs middle) | Edge vs Bovada | Spread flag | Best bettable | Model total | Middle of market total | Total range | Total edge (vs middle) | Edge vs Bovada | Total flag | Best bettable | Bovada s/t | DraftKings s/t | Out/Doubtful |",
          "|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|"]
     for r in df.itertuples():
-        L.append(f"| {r.tip_et} | {r.game} | {r.model_home_margin:+.1f} | {r.consensus_home_spread:+g} | {r.spread_range} | {r.spread_edge:+.1f} | {r.spread_edge_bovada:+.1f} | {r.spread_flag} | {r.best_bettable_spread} | "
+        L.append(f"| {r.tip_et} | {r.game} | {r.model_line} | {r.market_line} | {r.spread_range} | {r.spread_edge:+.1f} | {r.spread_edge_bovada:+.1f} | {r.spread_flag} | {r.best_bettable_spread} | "
                  f"{r.model_total:.1f} | {r.consensus_total:g} | {r.total_range} | {r.total_edge:+.1f} | {r.total_edge_bovada:+.1f} | {r.total_flag} | {r.best_bettable_total} | {r.bovada_spread_total} | {r.draftkings_spread_total} | {r.injury_report_out} |")
     L += ["", "'Middle of market' is the median across the books in the snapshot. With an even number of books it can fall between two posted numbers (for example +0.75), so it is NOT a line anyone offers: use the range and the Bovada/DraftKings columns for what you could actually get. Prices differ by book too (for example -106 to -120), which matters as much as half a point.",
+         "Lines are in betting notation for the home team: a minus number means favored (DET -2.0 = model has Detroit winning by 2), a plus number means underdog (DET +1.5 = market has Detroit losing by 1.5). The spread edge is the distance between the two (-2.0 vs +1.5 = 3.5 points).",
          "Spread flag HOME/AWAY = the side the model prefers by at least the threshold; OVER/UNDER likewise for totals. Home spread is in book notation (negative = home favored)."]
     (out / f"projections_{day}.md").write_text("\n".join(L), encoding="utf-8")
     print("\n".join(L))
