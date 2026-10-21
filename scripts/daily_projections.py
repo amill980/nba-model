@@ -67,6 +67,11 @@ def main():
     now = datetime.now(ET)
     day = a.date or ((now if a.today else now + timedelta(days=1)).strftime("%Y-%m-%d"))
     R, lg, gc = ratings()
+    import load_odds_archive      # rebuild odds_archive.csv from the raw snapshots so the newest one is used
+    try:
+        load_odds_archive.main()
+    except (SystemExit, Exception) as e:   # e.g. an unmapped team name, or a snapshot being written: keep the old table
+        print(f"warning: odds table not refreshed ({e}); using the existing odds_archive.csv")
     odds = pd.read_csv(ROOT / "data/odds/odds_archive.csv")
     odds = odds[odds.game_date_et == day]
     if odds.empty:
