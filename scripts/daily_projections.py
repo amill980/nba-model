@@ -18,6 +18,7 @@ ET = ZoneInfo("America/New_York")
 # frozen v1 parameters (Assumptions tab; tuned on 2023-24 and 2024-25 only)
 K, HCA, REST_COEF, REST_CAP, FATIGUE, MIN_EDGE = 10, 1.94, 1.35, 3, -0.59, 1.5
 CUR, PRIOR = "2026-27", "2025-26"
+LG_PRIOR_WEIGHT = 300   # team-games of weight on last season's league ORtg (about 10 games per team, matching K=10)
 BETTABLE = ["bovada", "betonlineag", "mybookieag", "betus", "lowvig"]
 
 
@@ -37,7 +38,11 @@ def ratings():
     gp_, tp = team_table(PRIOR); gc, tc = team_table(CUR)
     prior = pd.DataFrame({"po": 100 * tp.pts / tp.poss, "pd": 100 * tp.opp / tp.poss, "pp": tp.pace_sum / tp.gp})
     lg_prior = 100 * tp.pts.sum() / tp.poss.sum()
-    lg = 100 * tc.pts.sum() / tc.poss.sum() if len(tc) and tc.poss.sum() > 0 else lg_prior
+    # League average ORtg: blend last season's with this season's to date. Using this season alone after a handful of games
+    # (a few dozen team-games) is far too noisy and shifts every total (found 2026-10-21: 104.5 from 6 team-games vs 112.7 last season).
+    n_tg = int(tc.gp.sum()) if len(tc) else 0
+    lg_cur = 100 * tc.pts.sum() / tc.poss.sum() if n_tg > 0 and tc.poss.sum() > 0 else lg_prior
+    lg = (LG_PRIOR_WEIGHT * lg_prior + n_tg * lg_cur) / (LG_PRIOR_WEIGHT + n_tg)
     out = prior.copy(); out["gp"] = 0; out["co"] = 0.0; out["cd"] = 0.0; out["cp"] = 0.0
     if len(tc):
         c = tc.reindex(out.index)
