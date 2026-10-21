@@ -121,7 +121,10 @@ def main():
     df.insert(0, "report_date", day); df["snapshot_utc"] = snap
     for fn in (f"projections_{day}.csv", "latest.csv"):
         try: df.to_csv(out / fn, index=False)
-        except PermissionError: print(f"WARNING: {fn} is open in another program (probably Excel); close it and re-run to update that file.")
+        except PermissionError:   # the file is open in Excel: save the fresh data under a time-stamped name instead of silently keeping stale data
+            alt = fn.replace(".csv", f"_{datetime.now(ET):%H%M}.csv")
+            df.to_csv(out / alt, index=False)
+            print(f"WARNING: {fn} is open in another program (probably Excel), so it was NOT updated. Fresh data saved as {alt}.")
       # stable name for the Excel live workbook (Power Query)
     L = [f"# NBA projections for {day}", "",
          "**NOT A RECOMMENDATION. The v1 model has no demonstrated edge**: it failed its signed 2025-26 confirmation test and wins about 50% against the closing line. This page only shows the model next to the market.",
