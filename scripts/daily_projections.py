@@ -76,6 +76,10 @@ def main():
     odds = odds[odds.game_date_et == day]
     if odds.empty:
         raise SystemExit(f"No odds in the archive for {day}. The odds task polls only on game days; run it or wait for the next poll.")
+    # Pregame rows only: the API also returns in-play lines for games already started (a 27.5-point spread mid-game), which are not the market line.
+    odds = odds[odds.pregame] if "pregame" in odds.columns else odds[pd.to_datetime(odds.captured_utc, utc=True) < pd.to_datetime(odds.commence_time_utc, utc=True)]
+    if odds.empty:
+        raise SystemExit(f"No pregame odds in the archive for {day} (games may have already started).")
     snap = odds.captured_utc.max()
     odds = odds[odds.captured_utc == odds.groupby("event_id").captured_utc.transform("max")]
     inj_path = ROOT / "data/injuries/injury_status.csv"

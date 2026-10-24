@@ -72,6 +72,7 @@ def consensus_table(odds):
     """odds: odds_archive rows. Returns per (event, snapshot): median home spread and per-book home spread."""
     s = odds[(odds.market == "spreads") & (odds.outcome == "home")].copy()
     s["cap"] = pd.to_datetime(s.captured_utc, utc=True)
+    s = s[s.cap < pd.to_datetime(s.commence_time_utc, utc=True)]   # pregame only: the API also returns in-play lines after tip
     return s
 
 

@@ -1,0 +1,70 @@
+{
+ "schema_version": 1,
+ "source": "export_picks",
+ "date": "2026-10-22",
+ "snapshot_utc": "2026-10-22T20:00:20Z",
+ "as_of_local": "2026-10-22T16:00:20",
+ "flag_threshold": 1.5,
+ "games": [
+  {
+   "away_team": "CLE",
+   "home_team": "PHI",
+   "tip_et": "19:10",
+   "model_home_spread": 4.5,
+   "market_home_spread": -2.5,
+   "gap": 7.0,
+   "lean": "Lean CLE +2.5",
+   "model_total": 231.0,
+   "market_total": 237.0,
+   "total_gap": -6.0,
+   "total_lean": "Lean Under",
+   "n_books": 9,
+   "spread_range": "-2.5 to -2.5",
+   "total_range": "236.5 to 237.5",
+   "best_bettable_spread": "bovada +2.5 (-110)",
+   "best_bettable_total": "bovada 237 (-110)",
+   "injury_report_out": "CLE Diop,Khalifa Out; CLE Tomlin,Nae'Qwan Out; PHI Barlow,Dominick Out; PHI Fall,Tacko Out; PHI Hukporti,Ariel Out"
+  },
+  {
+   "away_team": "DEN",
+   "home_team": "OKC",
+   "tip_et": "21:40",
+   "model_home_spread": -5.2,
+   "market_home_spread": -8.0,
+   "gap": 2.8,
+   "lean": "Lean DEN +8.0",
+   "model_total": 232.2,
+   "market_total": 236.5,
+   "total_gap": -4.3,
+   "total_lean": "Lean Under",
+   "n_books": 9,
+   "spread_range": "-8.5 to -8",
+   "total_range": "236.5 to 237.5",
+   "best_bettable_spread": "bovada +8 (-110)",
+   "best_bettable_total": "bovada 236.5 (-110)",
+   "injury_report_out": "DEN Strawther,Julian Out; OKC Oweh,Otega Out; OKC Sorber,Thomas Out; OKC Topic,Nikola Out"
+  }
+ ],
+ "disclaimers": {
+  "product": "**NOT A RECOMMENDATION. The v1 model has no demonstrated edge.** It failed its signed 2025-26 confirmation test. Closing-line value on spreads was +0.35 points against the pre-registered +0.5 bar (permutation p = 0.0006: a real but small effect), and on totals +0.03 points (p = 0.25). Settled against the closing line, its spread picks won 49.5% and its totals picks 49.4%. Its average error was 11.5 points against the market close's 10.9. This page only shows the model next to the market. Early in the season its ratings are almost entirely last season's, and it does not use injuries. The market line is the median across books, which can fall between two numbers nobody offers.",
+  "totals": "**TOTALS: NOT A RECOMMENDATION.** The totals model's closing-line value in the signed confirmation was +0.03 points (95% interval -0.21 to +0.25, p = 0.25), which is not distinguishable from zero. The pattern seen in discovery did not replicate. **There is no demonstrated totals edge.**"
+ },
+ "model_status": [
+  {
+   "component": "Spread",
+   "status": "No edge: closing-line value +0.35 pts vs the +0.5 bar; 49.5% against the close (2025-26, run once)"
+  },
+  {
+   "component": "Totals",
+   "status": "No edge: closing-line value +0.03 pts (p = 0.25); 49.4% against the close"
+  },
+  {
+   "component": "Injury information",
+   "status": "Tested: the closing line already prices it (docs/Injury_v2_findings.md). Shown for information; the model does not use it"
+  },
+  {
+   "component": "Live study",
+   "status": "Phase A (exploration) runs to 2026-12-15; the pre-registered Phase B starts 2026-12-16 (docs/Live_Study_Plan.md)"
+  }
+ ]
+}

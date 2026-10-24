@@ -62,3 +62,6 @@ Draft design:
    - Rationale: CLV needs about 100 events to reach a clear answer, whereas win rate or profit would need roughly 2,000 or more bets to prove a 2% edge, and it is not distorted by luck. Limits: CLV is a proxy, not profit, and does not capture offshore juice, account limits or settlement risk.
 3. **Odds API upgrade:** deferred until Phase A shows whether a real lag exists.
 4. **Plan approval:** approved.
+
+## Addendum 2026-10-24: definition of the closing line
+The Odds API returns in-play lines for games already started, which contaminated one daily report (a 27.5-point mid-game spread shown as a market line). From now on: odds rows are flagged `pregame`; the consensus close is the last pregame snapshot before tip; a game counts toward Phase B only if that snapshot is within 20 minutes of tip (`data/odds/closing_lines.csv`). A near-tip polling task (every 5 minutes, only polls when a game tips within 10 minutes and no snapshot covers it) replaces the 16:00, 18:30, 20:30 and 22:00 fixed polls. Games with a stale close are listed by the health check and excluded.

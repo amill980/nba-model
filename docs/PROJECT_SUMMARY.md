@@ -31,7 +31,8 @@ data\                    gitignored: raw feeds, archives, logs, health reports (
 ## 4. What is running (Windows Task Scheduler, computer must be on and logged in)
 | Task | When | Does |
 |---|---|---|
-| NBA Odds Archive | 11:00, 13:30, 16:00, 18:30, 20:30, 22:00 ET | spreads+totals, US books, only if a game is within 14 h (2 credits/call) |
+| NBA Odds Archive | 11:00, 13:30 ET | spreads+totals, US books, only if a game is within 14 h (2 credits/call): the fixed daytime polls around the injury reports |
+| NBA Odds Close Poll | every 5 min, 12:00-23:30 ET | closing-line lock: polls only when a game tips within 10 min and no snapshot covers it (free /events check; 2 credits per poll, one poll per tip cluster) |
 | NBA Injury Archive | every 30 min | saves new official injury report PDFs |
 | NBA Injury Parse | hourly | PDFs to `data/injuries/injury_status.csv` |
 | NBA Daily Fetch | 06:30 | refresh 2026-27 results, flatten odds, parse injuries |
@@ -56,3 +57,7 @@ nba_api (team/player logs), ESPN scoreboard and core odds APIs (scores, per-book
 - Odds API upgrade ($30/month for 20,000 credits) only if Phase A shows a real lag.
 - The Odds API key is in plain text in the CFB and WNBA workbooks and was pasted in chat: rotation advised.
 - No moneyline backtest has been run (data is in the Lines tab).
+
+## 8. Odds data rules (learned 2026-10-24)
+- The Odds API also returns IN-PLAY lines for games already started (a 27.5-point spread mid-game). Every archived row is flagged `pregame` (captured before tip); everything that means "the market line" uses pregame rows only.
+- `data/odds/closing_lines.csv` is the locked close: for each started game, the last pregame snapshot, with minutes before tip and a quality label (locked = within 20 minutes). Games without a locked close are excluded from Phase B CLV.

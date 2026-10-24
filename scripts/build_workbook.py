@@ -322,7 +322,8 @@ arch = ROOT / "data/odds/odds_archive.csv"
 if arch.exists():
     ad = pd.read_csv(arch)
     if len(ad):
-        ad = ad[ad.captured_utc == ad.captured_utc.max()]   # workbook shows the LATEST snapshot only; full history stays in the CSV
+        if "pregame" in ad.columns: ad = ad[ad.pregame == True]   # in-play rows (games already started) are not market lines
+        ad = ad[ad.captured_utc == ad.groupby("event_id").captured_utc.transform("max")]   # latest pregame snapshot per game; full history stays in the CSV
         for i, rec in enumerate(ad.to_dict("records"), 3):
             for j, col in enumerate(["captured_utc", "event_id", "commence_time_utc", "home", "away", "book", "market", "outcome", "price", "point"], 1):
                 v = rec[col]; wo.cell(row=i, column=j, value=None if pd.isna(v) else v)

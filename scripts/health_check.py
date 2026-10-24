@@ -39,7 +39,7 @@ def main():
         games_today = int((ad.game_date_et == day).sum())
     lines.append(f"Odds: {len(today)} snapshots today ({', '.join(datetime.strptime(f.stem, '%Y%m%dT%H%M%SZ').replace(tzinfo=timezone.utc).astimezone(ET).strftime('%H:%M') for f in today)}); games seen in archive today: {games_today}")
     # scheduled-slot coverage: which of the day's planned polls produced a snapshot (gaps are accepted but recorded)
-    SLOTS = ["11:00", "13:30", "16:00", "18:30", "20:30", "22:00"]
+    SLOTS = ["11:00", "13:30"]   # fixed polls; later coverage comes from the near-tip closing-line polls checked below
     snap_times = [datetime.strptime(f.stem, "%Y%m%dT%H%M%SZ").replace(tzinfo=timezone.utc).astimezone(ET) for f in today]
     commences = []
     if arch.exists():
@@ -61,6 +61,18 @@ def main():
         old = pd.read_csv(gp) if gp.exists() else pd.DataFrame(columns=["date", "slot", "status", "snapshot_at"])
         new = pd.DataFrame(gap_rows, columns=["date", "slot", "status", "snapshot_at"])
         pd.concat([old[old.date != day], new]).to_csv(gp, index=False)
+    # closing-line lock: for games already started today, was the last pregame snapshot within 20 minutes of tip?
+    cl = ROOT / "data/odds/closing_lines.csv"
+    if cl.exists():
+        c = pd.read_csv(cl, usecols=["event_id", "game_date_et", "away", "home", "minutes_before_tip", "close_quality"]).drop_duplicates("event_id")
+        c = c[c.game_date_et == day]
+        if len(c):
+            n_lock = int(c.close_quality.str.startswith("locked").sum()); stale = c[~c.close_quality.str.startswith("locked")]
+            lines.append(f"Closing lines locked within 20 min of tip: {n_lock} of {len(c)} started games today" +
+                         ("" if stale.empty else "; stale: " + ", ".join(f"{r.away}@{r.home} ({r.minutes_before_tip:.0f} min)" for r in stale.itertuples())))
+            if len(stale): flags.append(f"{len(stale)} game(s) without a closing line within 20 min of tip (excluded from Phase B CLV)")
+        else:
+            lines.append("Closing lines: no games started yet today")
     q = ROOT / "data/odds/quota_log.csv"
     if q.exists():
         last = list(csv.DictReader(q.open(newline="")))[-1]

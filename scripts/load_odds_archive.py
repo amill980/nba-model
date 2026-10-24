@@ -54,6 +54,18 @@ def main():
                                          book=bk["key"], market=mk["key"], last_update_utc=mk.get("last_update"),
                                          outcome=outcome, price=oc.get("price"), point=oc.get("point")))
     df = pd.DataFrame(rows)
+    if len(df):
+        # The Odds API also returns IN-PLAY lines for games already started (e.g. a 27.5-point spread mid-game), so every row is
+        # flagged: pregame = captured before the scheduled tip. Anything that means "the market line" must use pregame rows only.
+        df["pregame"] = pd.to_datetime(df.captured_utc, utc=True) < pd.to_datetime(df.commence_time_utc, utc=True)
+        # Locked closing line: for each game, the last pregame snapshot, with how many minutes before tip it was taken.
+        pre = df[df.pregame]
+        last = pre.groupby("event_id").captured_utc.transform("max")
+        close = pre[pre.captured_utc == last].copy()
+        close = close[pd.to_datetime(close.commence_time_utc, utc=True) <= pd.Timestamp.now(tz="UTC")]   # only games already started have a locked close
+        close["minutes_before_tip"] = ((pd.to_datetime(close.commence_time_utc, utc=True) - pd.to_datetime(close.captured_utc, utc=True)).dt.total_seconds() / 60).round(1)
+        close["close_quality"] = close.minutes_before_tip.map(lambda m: "locked (<=20 min)" if m <= 20 else "stale (>20 min before tip)")
+        close.drop(columns=["pregame"]).to_csv(OUT / "closing_lines.csv", index=False)
     df.to_csv(OUT / "odds_archive.csv", index=False)
     lines = [f"snapshots: {len(files)}; rows: {len(df)}"]
     if len(df):

@@ -10,7 +10,7 @@ the API reports fewer than --reserve credits remaining.
 Usage:  python scripts/archive_odds.py [--regions us,us2] [--dry-run]
 """
 import argparse, csv, json, os, re, sys, urllib.error, urllib.request
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -33,12 +33,36 @@ def newest_snapshot_age_min():
     return (datetime.now(timezone.utc) - last).total_seconds() / 60
 
 
+def needs_close_poll(tips, snaps, now, lead_min=10, cover_min=12):
+    """True (plus the games concerned) if a game tips within `lead_min` minutes and no snapshot was taken in the
+    `cover_min` minutes before its tip. One poll covers every game that tips soon after it, so a cluster of
+    simultaneous tips costs a single call. tips and snaps are timezone-aware datetimes."""
+    upcoming = [t for t in tips if now < t <= now + timedelta(minutes=lead_min)]
+    need = [t for t in upcoming if not any(t - timedelta(minutes=cover_min) <= s < t for s in snaps)]
+    return bool(need), need
+
+
+def snapshot_times():
+    return [datetime.strptime(f.stem, "%Y%m%dT%H%M%SZ").replace(tzinfo=timezone.utc) for f in sorted(RAW.glob("*.json"))]
+
+
+def fetch_events(key):
+    ev_url = f"https://api.the-odds-api.com/v4/sports/{SPORT}/events?dateFormat=iso&apiKey={key}"
+    try:
+        with urllib.request.urlopen(ev_url, timeout=30) as r:
+            return json.loads(r.read())
+    except Exception as e:
+        sys.exit(f"Events request failed: {redact(repr(e), key)}")
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--regions", default="us,us2")
     ap.add_argument("--markets", default=DEFAULT_MARKETS)
     ap.add_argument("--only-if-games", action="store_true", help="skip unless an NBA game starts within --window-hours (uses the free /events endpoint, 0 credits)")
     ap.add_argument("--window-hours", type=float, default=14)
+    ap.add_argument("--near-tip", action="store_true", help="closing-line lock: poll only when a game tips within --lead-min minutes and no snapshot covers it")
+    ap.add_argument("--lead-min", type=float, default=10)
     ap.add_argument("--min-interval-min", type=float, default=15)
     ap.add_argument("--reserve", type=int, default=60)
     ap.add_argument("--dry-run", action="store_true")
@@ -48,6 +72,14 @@ def main():
     if not key:
         sys.exit("ODDS_API_KEY is not set.")
     RAW.mkdir(parents=True, exist_ok=True)
+
+    if a.near_tip:
+        a.min_interval_min = min(a.min_interval_min, 3)
+        tips = [datetime.fromisoformat(e["commence_time"].replace("Z", "+00:00")) for e in fetch_events(key)]
+        go, need = needs_close_poll(tips, snapshot_times(), datetime.now(timezone.utc), a.lead_min)
+        if not go:
+            print("Skipped: no game tips within the next %g min without a covering snapshot." % a.lead_min); return
+        print(f"Closing-line poll: {len(need)} game(s) tip within {a.lead_min:g} min and have no snapshot in the last 12 min.")
 
     age = newest_snapshot_age_min()
     if age is not None and age < a.min_interval_min:

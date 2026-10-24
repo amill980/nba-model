@@ -22,12 +22,26 @@ in
 let
     Source = $(Csv 'data\odds\odds_archive.csv'),
     Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
-    Typed = Table.TransformColumnTypes(Promoted, {{"price", Int64.Type},{"point", type number}}),
-    Latest = List.Max(Typed[captured_utc]),
-    Rows = Table.SelectRows(Typed, each [captured_utc] = Latest and [market] <> "h2h"),
-    Cols = Table.SelectColumns(Rows, {"captured_utc","game_date_et","commence_time_utc","away","home","book","market","outcome","point","price"})
+    Pre = Table.SelectRows(Promoted, each [pregame] = "True" and [market] <> "h2h"),
+    Typed = Table.TransformColumnTypes(Pre, {{"price", Int64.Type},{"point", type number}}),
+    Maxes = Table.Group(Typed, {"event_id"}, {{"maxcap", each List.Max([captured_utc]), type text}}),
+    Joined = Table.NestedJoin(Typed, {"event_id"}, Maxes, {"event_id"}, "m", JoinKind.Inner),
+    Expanded = Table.ExpandTableColumn(Joined, "m", {"maxcap"}),
+    Latest = Table.SelectRows(Expanded, each [captured_utc] = [maxcap]),
+    Cols = Table.SelectColumns(Latest, {"captured_utc","game_date_et","commence_time_utc","away","home","book","market","outcome","point","price"})
 in
     Cols
+"@
+ 'Closing' = @"
+let
+    Source = $(Csv 'data\odds\closing_lines.csv'),
+    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+    Rows = Table.SelectRows(Promoted, each [market] <> "h2h"),
+    Typed = Table.TransformColumnTypes(Rows, {{"price", Int64.Type},{"point", type number},{"minutes_before_tip", type number}}),
+    Cols = Table.SelectColumns(Typed, {"game_date_et","away","home","book","market","outcome","point","price","captured_utc","minutes_before_tip","close_quality"}),
+    Sorted = Table.Sort(Cols, {{"game_date_et", Order.Descending},{"home", Order.Ascending},{"market", Order.Ascending},{"book", Order.Ascending}})
+in
+    Sorted
 "@
  'Injuries' = @"
 let
@@ -68,7 +82,8 @@ try {
    'If a tab is empty, the file it reads has no rows yet (for example Results before the first game is played).',
    '',
    'Today: model projections vs the market (docs\daily\latest.csv, rewritten at 12:00 and 6:40 PM ET on game days).',
-   'Odds: the latest odds snapshot, spreads and totals, every book (data\odds\odds_archive.csv).',
+   'Odds: the latest PRE-GAME snapshot per game, spreads and totals, every book (in-play lines from games already started are excluded).',
+   'Closing: the locked closing line for each game already started: the last pre-game snapshot, with minutes before tip and a quality label (locked = within 20 minutes of tip).',
    'Injuries: latest Out / Doubtful statuses for games today and tomorrow (informational only; the model does not use them).',
    'Results: the 120 most recent 2026-27 team results (refreshed by the 6:30 AM task).',
    'Health: last data-collection health check (counts only).',
@@ -81,7 +96,7 @@ try {
   $readme.Cells.Item(1,1).Font.Bold = $true; $readme.Cells.Item(1,1).Font.Size = 14
   $readme.Columns.Item(1).ColumnWidth = 150
 
-  $sheetFor = @{ 'Today'='Today'; 'Odds'='Odds'; 'Injuries'='Injuries'; 'Results'='Results' }
+  $sheetFor = @{ 'Today'='Today'; 'Odds'='Odds'; 'Closing'='Closing'; 'Injuries'='Injuries'; 'Results'='Results' }
   foreach ($name in $queries.Keys) {
     [void]$wb.Queries.Add($name, $queries[$name])
     $ws = $wb.Worksheets.Add([Type]::Missing, $wb.Worksheets.Item($wb.Worksheets.Count))
