@@ -12,9 +12,9 @@ $queries = [ordered]@{
 let
     Source = $(Csv 'docs\daily\latest.csv'),
     Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
-    Keep = Table.SelectColumns(Promoted, {"report_date","tip_et","game","model_line","market_line","model_home_margin","consensus_home_spread","spread_range","spread_edge","spread_edge_bovada","spread_flag","best_bettable_spread","model_total","consensus_total","total_range","total_edge","total_edge_bovada","total_flag","best_bettable_total","bovada_spread_total","draftkings_spread_total","games_played_home_away","injury_report_out","snapshot_utc"}),
+    Keep = Table.SelectColumns(Promoted, {"report_date","tip_et","line_status","line_as_of_et","game","model_line","market_line","model_home_margin","consensus_home_spread","spread_range","spread_edge","spread_edge_bovada","spread_flag","best_bettable_spread","model_total","consensus_total","total_range","total_edge","total_edge_bovada","total_flag","best_bettable_total","bovada_spread_total","draftkings_spread_total","games_played_home_away","injury_report_out","snapshot_utc"}),
     Typed = Table.TransformColumnTypes(Keep, {{"model_home_margin", type number},{"consensus_home_spread", type number},{"spread_edge", type number},{"spread_edge_bovada", type number},{"model_total", type number},{"consensus_total", type number},{"total_edge", type number},{"total_edge_bovada", type number}}),
-    Renamed = Table.RenameColumns(Typed, {{"report_date","Date"},{"tip_et","Tip (ET)"},{"game","Game"},{"model_line","Model line (home)"},{"market_line","Market line (home, middle)"},{"model_home_margin","Model margin (home +)"},{"consensus_home_spread","Middle of market spread (home)"},{"spread_range","Spread range across books"},{"spread_edge","Spread edge vs middle"},{"spread_edge_bovada","Spread edge vs Bovada"},{"spread_flag","Spread flag"},{"best_bettable_spread","Best bettable spread"},{"model_total","Model total"},{"consensus_total","Middle of market total"},{"total_range","Total range across books"},{"total_edge","Total edge vs middle"},{"total_edge_bovada","Total edge vs Bovada"},{"total_flag","Total flag"},{"best_bettable_total","Best bettable total"},{"bovada_spread_total","Bovada spread / total"},{"draftkings_spread_total","DraftKings spread / total"},{"games_played_home_away","Games played (home/away)"},{"injury_report_out","Out / Doubtful (info only)"},{"snapshot_utc","Odds snapshot (UTC)"}})
+    Renamed = Table.RenameColumns(Typed, {{"report_date","Date"},{"tip_et","Tip (ET)"},{"line_status","Line status"},{"line_as_of_et","Line as of (ET)"},{"game","Game"},{"model_line","Model line (home)"},{"market_line","Market line (home, middle)"},{"model_home_margin","Model margin (home +)"},{"consensus_home_spread","Middle of market spread (home)"},{"spread_range","Spread range across books"},{"spread_edge","Spread edge vs middle"},{"spread_edge_bovada","Spread edge vs Bovada"},{"spread_flag","Spread flag"},{"best_bettable_spread","Best bettable spread"},{"model_total","Model total"},{"consensus_total","Middle of market total"},{"total_range","Total range across books"},{"total_edge","Total edge vs middle"},{"total_edge_bovada","Total edge vs Bovada"},{"total_flag","Total flag"},{"best_bettable_total","Best bettable total"},{"bovada_spread_total","Bovada spread / total"},{"draftkings_spread_total","DraftKings spread / total"},{"games_played_home_away","Games played (home/away)"},{"injury_report_out","Out / Doubtful (info only)"},{"snapshot_utc","Odds snapshot (UTC)"}})
 in
     Renamed
 "@
@@ -79,6 +79,7 @@ try {
    'NBA Live: refresh workbook (reads the daily CSVs; does not fetch data itself)',
    '',
    'HOW TO USE: Data > Refresh All. The tabs update from the files the scheduled tasks write in the project folder.',
+   'The odds-driven tabs (Today, Odds, Closing) refresh themselves every minute while this workbook is open, and on open; the others every 10 minutes. Data > Refresh All forces it.',
    'If a tab is empty, the file it reads has no rows yet (for example Results before the first game is played).',
    '',
    'Today: model projections vs the market (docs\daily\latest.csv, rewritten at 12:00 and 6:40 PM ET on game days).',
@@ -108,6 +109,9 @@ try {
     $lo.QueryTable.BackgroundQuery = $false
     $lo.QueryTable.RefreshStyle = 1
     $lo.QueryTable.Refresh($false) | Out-Null
+    # auto-refresh while the workbook is open: every minute for the odds-driven tabs, every 10 minutes for the rest
+    $lo.QueryTable.RefreshOnFileOpen = $true
+    $lo.QueryTable.RefreshPeriod = $(if ($name -in 'Today','Odds','Closing') { 1 } else { 10 })
     $lo.TableStyle = 'TableStyleMedium2'
     $ws.UsedRange.Columns.AutoFit() | Out-Null
   }

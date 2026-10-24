@@ -61,3 +61,4 @@ nba_api (team/player logs), ESPN scoreboard and core odds APIs (scores, per-book
 ## 8. Odds data rules (learned 2026-10-24)
 - The Odds API also returns IN-PLAY lines for games already started (a 27.5-point spread mid-game). Every archived row is flagged `pregame` (captured before tip); everything that means "the market line" uses pregame rows only.
 - `data/odds/closing_lines.csv` is the locked close: for each started game, the last pregame snapshot, with minutes before tip and a quality label (locked = within 20 minutes). Games without a locked close are excluded from Phase B CLV.
+- Every odds poll (fixed or near-tip) now regenerates today's projections report (`--then-report`), so `latest.csv` and the live workbook's Today tab follow each new snapshot. The Today tab shows per game whether the line is OPEN (latest, still moving) or CLOSED (tipped; locked close). The workbook refreshes itself every minute while open.

@@ -63,6 +63,7 @@ def main():
     ap.add_argument("--window-hours", type=float, default=14)
     ap.add_argument("--near-tip", action="store_true", help="closing-line lock: poll only when a game tips within --lead-min minutes and no snapshot covers it")
     ap.add_argument("--lead-min", type=float, default=10)
+    ap.add_argument("--then-report", action="store_true", help="after saving a snapshot, regenerate today's projections report")
     ap.add_argument("--min-interval-min", type=float, default=15)
     ap.add_argument("--reserve", type=int, default=60)
     ap.add_argument("--dry-run", action="store_true")
@@ -135,6 +136,10 @@ def main():
     print(f"Saved {stamp}.json: {len(games)} games. Credits remaining: {remaining}.")
     if remaining is not None and int(remaining) < a.reserve:
         print(f"WARNING: remaining credits below reserve ({a.reserve}).")
+    if a.then_report:   # keep latest.csv (the dashboard's Today tab) in step with every new snapshot
+        import subprocess
+        r = subprocess.run([sys.executable, str(Path(__file__).resolve().parent / "daily_projections.py"), "--today"], capture_output=True, text=True)
+        print("report refreshed" if r.returncode == 0 else f"report not refreshed: {(r.stdout + r.stderr).strip()[-200:]}")
 
 
 if __name__ == "__main__":
