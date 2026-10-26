@@ -7,7 +7,7 @@ Inputs : data/odds/odds_archive.csv (latest snapshot per game), team game logs, 
 Output : docs/daily/projections_<date>.md and .csv
 Usage  : python scripts/daily_projections.py [--date YYYY-MM-DD]   (default: tomorrow, ET; today if --today)
 """
-import argparse
+import argparse, sys
 from datetime import datetime, timedelta
 from pathlib import Path
 from zoneinfo import ZoneInfo
@@ -74,6 +74,15 @@ def main():
         print(f"warning: odds table not refreshed ({e}); using the existing odds_archive.csv")
     odds = pd.read_csv(ROOT / "data/odds/odds_archive.csv")
     odds = odds[odds.game_date_et == day]
+    if odds.empty and a.today:
+        # No snapshot lists today's games (for example the 11:00 poll failed after the laptop woke without internet): take one now.
+        import subprocess
+        r = subprocess.run([sys.executable, str(Path(__file__).resolve().parent / "archive_odds.py"), "--regions", "us", "--markets", "spreads,totals",
+                            "--only-if-games", "--reserve", "100"], capture_output=True, text=True)
+        print("fallback odds poll:", (r.stdout + r.stderr).strip()[-200:])
+        try: load_odds_archive.main()
+        except (SystemExit, Exception) as e: print(f"warning: odds table not refreshed ({e})")
+        odds = pd.read_csv(ROOT / "data/odds/odds_archive.csv"); odds = odds[odds.game_date_et == day]
     if odds.empty:
         raise SystemExit(f"No odds in the archive for {day}. The odds task polls only on game days; run it or wait for the next poll.")
     # Pregame rows only: the API also returns in-play lines for games already started (a 27.5-point spread mid-game), which are not the market line.
