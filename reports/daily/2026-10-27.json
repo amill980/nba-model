@@ -1,0 +1,108 @@
+{
+ "schema_version": 1,
+ "source": "export_picks",
+ "date": "2026-10-27",
+ "snapshot_utc": "2026-10-28T00:00:59Z",
+ "as_of_local": "2026-10-27T20:00:59",
+ "flag_threshold": 1.5,
+ "games": [
+  {
+   "away_team": "BKN",
+   "home_team": "BOS",
+   "tip_et": "19:40",
+   "model_home_spread": -20.0,
+   "market_home_spread": -13.5,
+   "gap": -6.5,
+   "lean": "Lean BOS -13.5",
+   "model_total": 222.7,
+   "market_total": 223.5,
+   "total_gap": -0.8,
+   "total_lean": "",
+   "n_books": 9,
+   "spread_range": "-13.5 to -12.5",
+   "total_range": "222.5 to 224.5",
+   "best_bettable_spread": "mybookieag -12.5 (-110)",
+   "best_bettable_total": "",
+   "injury_report_out": "BKN Bilodeau,Tyler Out; BKN Jefferson,Joshua Out; BKN Nelson,Grant Out; BKN Powell,Drake Out; BKN Saraf,Ben Out; BOS Carter,Devin Out"
+  },
+  {
+   "away_team": "SAC",
+   "home_team": "SAS",
+   "tip_et": "20:10",
+   "model_home_spread": -20.8,
+   "market_home_spread": -19.0,
+   "gap": -1.8,
+   "lean": "Lean SAS -19.0",
+   "model_total": 231.3,
+   "market_total": 232.5,
+   "total_gap": -1.2,
+   "total_lean": "",
+   "n_books": 9,
+   "spread_range": "-19.5 to -18.5",
+   "total_range": "231.5 to 234.5",
+   "best_bettable_spread": "lowvig -19 (-111)",
+   "best_bettable_total": "",
+   "injury_report_out": "SAC Cardwell,Dylan Out; SAC Murray,Keegan Out; SAC Pedulla,Sean Out; SAC Raynaud,Maxime Out; SAC Simmons,Ben Out; SAS Harris,Tobias Out; SAS Quaintance,Jayden Out"
+  },
+  {
+   "away_team": "DET",
+   "home_team": "NYK",
+   "tip_et": "20:10",
+   "model_home_spread": 3.6,
+   "market_home_spread": -4.0,
+   "gap": 7.6,
+   "lean": "Lean DET +4.0",
+   "model_total": 221.0,
+   "market_total": 220.5,
+   "total_gap": 0.5,
+   "total_lean": "",
+   "n_books": 9,
+   "spread_range": "-4.5 to -4",
+   "total_range": "219.5 to 221",
+   "best_bettable_spread": "lowvig +4 (-111)",
+   "best_bettable_total": "",
+   "injury_report_out": "DET Duren,Jalen Out; DET Joe,Isaiah Out; DET Onyenso,Ugonna Out; NYK Alvarado,Jose Out"
+  },
+  {
+   "away_team": "POR",
+   "home_team": "LAL",
+   "tip_et": "23:10",
+   "model_home_spread": 0.1,
+   "market_home_spread": -2.0,
+   "gap": 2.1,
+   "lean": "Lean POR +2.0",
+   "model_total": 234.3,
+   "market_total": 233.5,
+   "total_gap": 0.8,
+   "total_lean": "",
+   "n_books": 9,
+   "spread_range": "-2.5 to -1.5",
+   "total_range": "232.5 to 233.5",
+   "best_bettable_spread": "mybookieag +2 (-110)",
+   "best_bettable_total": "",
+   "injury_report_out": "LAL Carr,Cameron Out; LAL Thiero,Adou Out; POR Kent,Jayson Out; POR Sharpe,Shaedon Out; POR Tonje,John Out; POR Youngblood,Chris Out"
+  }
+ ],
+ "disclaimers": {
+  "product": "**NOT A RECOMMENDATION. The v1 model has no demonstrated edge.** It failed its signed 2025-26 confirmation test. Closing-line value on spreads was +0.35 points against the pre-registered +0.5 bar (permutation p = 0.0006: a real but small effect), and on totals +0.03 points (p = 0.25). Settled against the closing line, its spread picks won 49.5% and its totals picks 49.4%. Its average error was 11.5 points against the market close's 10.9. This page only shows the model next to the market. Early in the season its ratings are almost entirely last season's, and it does not use injuries. The market line is the median across books, which can fall between two numbers nobody offers.",
+  "totals": "**TOTALS: NOT A RECOMMENDATION.** The totals model's closing-line value in the signed confirmation was +0.03 points (95% interval -0.21 to +0.25, p = 0.25), which is not distinguishable from zero. The pattern seen in discovery did not replicate. **There is no demonstrated totals edge.**"
+ },
+ "model_status": [
+  {
+   "component": "Spread",
+   "status": "No edge: closing-line value +0.35 pts vs the +0.5 bar; 49.5% against the close (2025-26, run once)"
+  },
+  {
+   "component": "Totals",
+   "status": "No edge: closing-line value +0.03 pts (p = 0.25); 49.4% against the close"
+  },
+  {
+   "component": "Injury information",
+   "status": "Tested: the closing line already prices it (docs/Injury_v2_findings.md). Shown for information; the model does not use it"
+  },
+  {
+   "component": "Live study",
+   "status": "Phase A (exploration) runs to 2026-12-15; the pre-registered Phase B starts 2026-12-16 (docs/Live_Study_Plan.md)"
+  }
+ ]
+}

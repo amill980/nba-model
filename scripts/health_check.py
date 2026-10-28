@@ -73,6 +73,12 @@ def main():
             if len(stale): flags.append(f"{len(stale)} game(s) without a closing line within 20 min of tip (excluded from Phase B CLV)")
         else:
             lines.append("Closing lines: no games started yet today")
+    # today's projections report: should exist by mid-afternoon on any day with games
+    rep = ROOT / "docs/daily" / f"projections_{day}.md"
+    if games_today:
+        lines.append("Daily report: " + (f"present (updated {datetime.fromtimestamp(rep.stat().st_mtime, ET):%H:%M})" if rep.exists() else "MISSING"))
+        if not rep.exists() and datetime.now(ET).hour >= 15 and day == datetime.now(ET).strftime("%Y-%m-%d"):
+            flags.append("daily projections report missing for a game day")
     q = ROOT / "data/odds/quota_log.csv"
     if q.exists():
         last = list(csv.DictReader(q.open(newline="")))[-1]
