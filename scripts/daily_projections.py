@@ -62,6 +62,17 @@ def rest_info(gc, team, day):
     return rest, int(last2 is not None and (pd.Timestamp(day) - last2).days <= 3)
 
 
+def needs_fresh_poll(odds, max_age_min=90, now=None):
+    """True if today's games have no odds yet, or the newest PRE-GAME snapshot is older than max_age_min while at least one game has not tipped."""
+    if odds.empty: return True
+    now = now or pd.Timestamp.now(tz="UTC")
+    cap = pd.to_datetime(odds.captured_utc, utc=True); tip = pd.to_datetime(odds.commence_time_utc, utc=True)
+    pre = cap < tip
+    if not pre.any(): return False                       # every game already tipped: nothing to refresh
+    if not (tip > now).any(): return False               # nothing left to bet before tip
+    return (now - cap[pre].max()).total_seconds() / 60 > max_age_min
+
+
 def main():
     ap = argparse.ArgumentParser(); ap.add_argument("--date"); ap.add_argument("--today", action="store_true"); a = ap.parse_args()
     now = datetime.now(ET)
@@ -74,8 +85,9 @@ def main():
         print(f"warning: odds table not refreshed ({e}); using the existing odds_archive.csv")
     odds = pd.read_csv(ROOT / "data/odds/odds_archive.csv")
     odds = odds[odds.game_date_et == day]
-    if odds.empty and a.today:
-        # No snapshot lists today's games (for example the 11:00 poll failed after the laptop woke without internet): take one now.
+    if a.today and needs_fresh_poll(odds):
+        # No snapshot lists today's games, or the newest is hours old while games are still to come (for example the 11:45 poll failed after the
+        # laptop woke without internet): take one now. The poll script skips if a snapshot was taken in the last 15 minutes.
         import subprocess
         r = subprocess.run([sys.executable, str(Path(__file__).resolve().parent / "archive_odds.py"), "--regions", "us", "--markets", "spreads,totals",
                             "--only-if-games", "--reserve", "100"], capture_output=True, text=True)

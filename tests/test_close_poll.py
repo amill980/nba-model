@@ -19,10 +19,10 @@ go, _ = ao.needs_close_poll([now + timedelta(minutes=25)], [], now); assert not 
 go, _ = ao.needs_close_poll([now - timedelta(minutes=5)], [], now); assert not go
 # two tips in the same cluster need one poll (both listed, one call); a later tip is not yet due
 tips = [tip, tip + timedelta(minutes=5), now + timedelta(minutes=60)]
-go, need = ao.needs_close_poll(tips, [], now); assert go and len(need) == 2
+go, need = ao.needs_close_poll(tips, [], now); assert go and len(need) == 1   # only the +5 tip is due; the +10 tip will be covered by the same poll
 # one poll covers tips up to 20 minutes after it: tip at +5 triggers a poll at `now`; a tip at +18 is then already covered
 snap_now = [now]
 go, _ = ao.needs_close_poll([now + timedelta(minutes=18)], snap_now, now + timedelta(minutes=10)); assert not go
 # but a tip 25 minutes after that poll is not covered
-go, _ = ao.needs_close_poll([now + timedelta(minutes=25)], snap_now, now + timedelta(minutes=12)); assert go
+go, _ = ao.needs_close_poll([now + timedelta(minutes=25)], snap_now, now + timedelta(minutes=19)); assert go
 print("close-poll tests passed")

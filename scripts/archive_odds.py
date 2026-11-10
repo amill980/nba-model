@@ -33,7 +33,7 @@ def newest_snapshot_age_min():
     return (datetime.now(timezone.utc) - last).total_seconds() / 60
 
 
-def needs_close_poll(tips, snaps, now, lead_min=15, cover_min=20):
+def needs_close_poll(tips, snaps, now, lead_min=7, cover_min=20):
     """True (plus the games concerned) if a game tips within `lead_min` minutes and no snapshot was taken in the
     `cover_min` minutes before its tip. One poll covers every game that tips soon after it, so a cluster of
     simultaneous tips costs a single call. tips and snaps are timezone-aware datetimes."""
@@ -62,7 +62,7 @@ def main():
     ap.add_argument("--only-if-games", action="store_true", help="skip unless an NBA game starts within --window-hours (uses the free /events endpoint, 0 credits)")
     ap.add_argument("--window-hours", type=float, default=14)
     ap.add_argument("--near-tip", action="store_true", help="closing-line lock: poll only when a game tips within --lead-min minutes and no snapshot covers it")
-    ap.add_argument("--lead-min", type=float, default=15)
+    ap.add_argument("--lead-min", type=float, default=7)
     ap.add_argument("--then-report", action="store_true", help="after saving a snapshot, regenerate today's projections report")
     ap.add_argument("--min-interval-min", type=float, default=15)
     ap.add_argument("--reserve", type=int, default=60)
