@@ -39,7 +39,7 @@ def main():
         games_today = int((ad.game_date_et == day).sum())
     lines.append(f"Odds: {len(today)} snapshots today ({', '.join(datetime.strptime(f.stem, '%Y%m%dT%H%M%SZ').replace(tzinfo=timezone.utc).astimezone(ET).strftime('%H:%M') for f in today)}); games seen in archive today: {games_today}")
     # scheduled-slot coverage: which of the day's planned polls produced a snapshot (gaps are accepted but recorded)
-    SLOTS = ["11:00", "13:30"]   # fixed polls; later coverage comes from the near-tip closing-line polls checked below
+    SLOTS = ["11:45"]   # fixed poll (was 11:00 and 13:30 before 2026-11-01); later coverage comes from the near-tip closing-line polls checked below
     snap_times = [datetime.strptime(f.stem, "%Y%m%dT%H%M%SZ").replace(tzinfo=timezone.utc).astimezone(ET) for f in today]
     commences = []
     if arch.exists():
@@ -64,7 +64,8 @@ def main():
     # closing-line lock: for games already started today, was the last pregame snapshot within 20 minutes of tip?
     cl = ROOT / "data/odds/closing_lines.csv"
     if cl.exists():
-        c = pd.read_csv(cl, usecols=["event_id", "game_date_et", "away", "home", "minutes_before_tip", "close_quality"]).drop_duplicates("event_id")
+        c = pd.read_csv(cl, usecols=["event_id", "game_date_et", "away", "home", "market", "minutes_before_tip", "close_quality"])
+        c = c[c.market == "spreads"].drop_duplicates("event_id")   # lock quality is judged on spreads (closing polls are spreads-only)
         c = c[c.game_date_et == day]
         if len(c):
             n_lock = int(c.close_quality.str.startswith("locked").sum()); stale = c[~c.close_quality.str.startswith("locked")]

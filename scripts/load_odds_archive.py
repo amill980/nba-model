@@ -60,7 +60,8 @@ def main():
         df["pregame"] = pd.to_datetime(df.captured_utc, utc=True) < pd.to_datetime(df.commence_time_utc, utc=True)
         # Locked closing line: for each game, the last pregame snapshot, with how many minutes before tip it was taken.
         pre = df[df.pregame]
-        last = pre.groupby("event_id").captured_utc.transform("max")
+        # Per game AND market: closing polls are spreads-only, so a totals close can be older than the spreads close (labelled stale then).
+        last = pre.groupby(["event_id", "market"]).captured_utc.transform("max")
         close = pre[pre.captured_utc == last].copy()
         close = close[pd.to_datetime(close.commence_time_utc, utc=True) <= pd.Timestamp.now(tz="UTC")]   # only games already started have a locked close
         close["minutes_before_tip"] = ((pd.to_datetime(close.commence_time_utc, utc=True) - pd.to_datetime(close.captured_utc, utc=True)).dt.total_seconds() / 60).round(1)

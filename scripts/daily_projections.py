@@ -102,7 +102,8 @@ def main():
     if odds.empty:
         raise SystemExit(f"No pregame odds in the archive for {day} (games may have already started).")
     snap = odds.captured_utc.max()
-    odds = odds[odds.captured_utc == odds.groupby("event_id").captured_utc.transform("max")]
+    # Latest snapshot per game AND market: closing polls are spreads-only, so totals come from the newest snapshot that has them.
+    odds = odds[odds.captured_utc == odds.groupby(["event_id", "market"]).captured_utc.transform("max")]
     inj_path = ROOT / "data/injuries/injury_status.csv"
     inj = pd.read_csv(inj_path) if inj_path.exists() else pd.DataFrame()
     rows = []
@@ -141,7 +142,7 @@ def main():
             x = inj[(inj.team.isin([home, away])) & inj.status.isin(["Out", "Doubtful"]) & (pd.to_datetime(inj.game_date, format="%m/%d/%Y").dt.strftime("%Y-%m-%d") == day)]
             if len(x): notes = "; ".join(sorted({f"{r.team} {r.player} {r.status}" for r in x.itertuples()}))
         tip = pd.Timestamp(commence).tz_convert(ET).strftime("%I:%M %p")
-        snap_g = pd.Timestamp(g.captured_utc.iloc[0]); tip_ts = pd.Timestamp(commence)
+        snap_g = pd.Timestamp(g[g.market == "spreads"].captured_utc.max() if (g.market == "spreads").any() else g.captured_utc.max()); tip_ts = pd.Timestamp(commence)
         mins_before_tip = (tip_ts - snap_g).total_seconds() / 60
         if tip_ts <= pd.Timestamp.now(tz="UTC"):    # game has tipped: its last pregame snapshot is the closing line
             line_status = "CLOSED - locked close" if mins_before_tip <= 20 else f"CLOSED - stale close ({mins_before_tip:.0f} min before tip)"
