@@ -59,8 +59,9 @@ def main(argv=None):
             return 0
         print(f"player logs are behind (newest game {newest}); fetching again")
     steps = [["fetch_games.py", "--seasons", a.season, "--refresh"], ["fetch_players.py", "--seasons", a.season, "--refresh"],
-             ["load_odds_archive.py"], ["parse_injuries.py"]]
-    network = {"fetch_games.py", "fetch_players.py"}
+             ["fetch_rosters.py", "--season", a.season], ["load_odds_archive.py"], ["parse_injuries.py"],
+             ["build_profiles.py", "--season", a.season]]
+    network = {"fetch_games.py", "fetch_players.py", "fetch_rosters.py"}
     rc = 0
     for st in steps:
         cmd = [sys.executable, str(S / st[0])] + st[1:]

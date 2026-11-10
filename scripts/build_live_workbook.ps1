@@ -66,6 +66,16 @@ let
 in
     Top
 "@
+ 'Players' = @"
+let
+    Source = $(Csv 'data\profiles\player_profiles.csv'),
+    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+    Keep = Table.SelectColumns(Promoted, {"player","team","position","height_in","age","nba_exp","gp","games_missed","mpg","mpg_last5","mpg_last10","mpg_trend_last10_vs_season","minutes_rank_on_team","pts","reb","ast","pts_per36","ts_pct","fg3_pct","ft_pct","usage_proxy_per36","prior_mpg","prior_pts_per36","latest_injury_status","latest_status_game_date","times_listed_out_or_doubtful","how_acquired"}),
+    Typed = Table.TransformColumnTypes(Keep, {{"height_in", Int64.Type},{"age", type number},{"gp", Int64.Type},{"games_missed", Int64.Type},{"mpg", type number},{"mpg_last5", type number},{"mpg_last10", type number},{"mpg_trend_last10_vs_season", type number},{"pts", type number},{"reb", type number},{"ast", type number},{"pts_per36", type number},{"ts_pct", type number},{"fg3_pct", type number},{"ft_pct", type number},{"usage_proxy_per36", type number},{"prior_mpg", type number},{"prior_pts_per36", type number}}),
+    Sorted = Table.Sort(Typed, {{"team", Order.Ascending},{"mpg", Order.Descending}})
+in
+    Sorted
+"@
 }
 
 $xl = New-Object -ComObject Excel.Application
@@ -87,6 +97,7 @@ try {
    'Closing: the locked closing line for each game already started: the last pre-game snapshot, with minutes before tip and a quality label (locked = within 20 minutes of tip).',
    'Injuries: latest Out / Doubtful statuses for games today and tomorrow (informational only; the model does not use them).',
    'Results: the 120 most recent 2026-27 team results (refreshed by the 6:30 AM task).',
+   'Players: profiles of every player averaging 15+ minutes over 5+ games (bio, minutes, production, injury status; descriptive only). Rebuilt each morning.',
    'Health: last data-collection health check (counts only).',
    '',
    'NOT A RECOMMENDATION. The v1 model failed its signed 2025-26 confirmation test and has no demonstrated edge (docs\Confirmation_Results.md).',
@@ -97,7 +108,7 @@ try {
   $readme.Cells.Item(1,1).Font.Bold = $true; $readme.Cells.Item(1,1).Font.Size = 14
   $readme.Columns.Item(1).ColumnWidth = 150
 
-  $sheetFor = @{ 'Today'='Today'; 'Odds'='Odds'; 'Closing'='Closing'; 'Injuries'='Injuries'; 'Results'='Results' }
+  $sheetFor = @{ 'Today'='Today'; 'Odds'='Odds'; 'Closing'='Closing'; 'Injuries'='Injuries'; 'Results'='Results'; 'Players'='Players' }
   foreach ($name in $queries.Keys) {
     [void]$wb.Queries.Add($name, $queries[$name])
     $ws = $wb.Worksheets.Add([Type]::Missing, $wb.Worksheets.Item($wb.Worksheets.Count))

@@ -17,3 +17,4 @@ data/backtest/*
 # generated daily reports
 docs/daily/
 NBA_Live.xlsx
+docs/profiles/
