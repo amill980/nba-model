@@ -12,6 +12,7 @@ Usage:  python scripts/archive_odds.py [--regions us,us2] [--dry-run]
 import argparse, csv, json, os, re, sys, urllib.error, urllib.request
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
+from zoneinfo import ZoneInfo
 
 ROOT = Path(__file__).resolve().parent.parent
 RAW = ROOT / "data" / "odds" / "raw"
@@ -66,6 +67,7 @@ def main():
     ap.add_argument("--then-report", action="store_true", help="after saving a snapshot, regenerate today's projections report")
     ap.add_argument("--min-interval-min", type=float, default=15)
     ap.add_argument("--reserve", type=int, default=60)
+    ap.add_argument("--not-before-hour", type=int, default=0, help="skip before this hour of the day, ET (used by the wake-up poll so a 2 AM wake costs nothing)")
     ap.add_argument("--dry-run", action="store_true")
     a = ap.parse_args()
 
@@ -73,6 +75,9 @@ def main():
     if not key:
         sys.exit("ODDS_API_KEY is not set.")
     RAW.mkdir(parents=True, exist_ok=True)
+
+    if a.not_before_hour and datetime.now(ZoneInfo("America/New_York")).hour < a.not_before_hour:
+        print(f"Skipped: before {a.not_before_hour}:00 ET."); return
 
     if a.near_tip:
         a.min_interval_min = min(a.min_interval_min, 3)
