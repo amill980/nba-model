@@ -1,0 +1,144 @@
+name: NBA daily projections
+
+# Twice a day, 12:00 and 18:40 Eastern in winter (the times of the PC tasks it replaces; in the weeks on daylight time they run an hour later).
+# GitHub may start a run several minutes late.
+#
+# Two modes, set by the repository variable PUBLISH_TO_SITE:
+#   not 'true'  SHADOW: no Odds API credits are used (the key is withheld) and nothing is pushed anywhere. The game logs, the unified tables,
+#               the ratings and whatever the report steps can do are attached to the run as an artifact, to be compared with the PC's.
+#   'true'      LIVE: the projections step may take an Odds API snapshot (about 2 credits, only when its own freshness check asks for one), the
+#               state is saved, and picks, tables and ratings are pushed to the model-desk repository after its own data check passes.
+#               Turn the PC's NBA projections tasks off at the same time (see scripts/cloud_state.py for what lives where).
+#
+# Why not the PC's data source: stats.nba.com drops connections from GitHub's servers (checked 2026-11-16), so this season's team game logs come
+# from ESPN's public box scores (scripts/fetch_games_espn.py), validated against nba_api's file: every figure the ratings read matched for all 394
+# team-games to that date except two turnovers and one minutes entry (nba_api's was wrong). The player data and the live study's collectors
+# (near-tip odds polling, the injury archive) stay on the PC.
+on:
+  schedule:
+    - cron: "0 17 * * *"
+    - cron: "40 23 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: nba-daily
+  cancel-in-progress: false
+
+env:
+  TZ: America/New_York          # "today" and the games' dates are Eastern, as on the PC
+  LIVE: ${{ vars.PUBLISH_TO_SITE == 'true' }}
+
+jobs:
+  daily:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v5
+
+      # What the run remembers lives on the 'state' branch (see scripts/cloud_state.py). It cannot go into data/ because a few files there are tracked.
+      - uses: actions/checkout@v5
+        with:
+          ref: state
+          path: _state
+
+      # Private sibling repos, read with a token that can see them (secret CROSS_REPO_TOKEN).
+      - uses: actions/checkout@v5
+        with:
+          repository: amill980/sportsdata
+          token: ${{ secrets.CROSS_REPO_TOKEN }}
+          path: _sportsdata
+      - uses: actions/checkout@v5
+        with:
+          repository: amill980/model-desk
+          token: ${{ secrets.CROSS_REPO_TOKEN }}
+          path: _site
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - name: Install
+        run: pip install pandas numpy requests
+
+      - name: Restore the state
+        run: python scripts/cloud_state.py restore --state _state
+
+      # The model's ratings have always been built from games through yesterday (the PC fetches its logs once, at 6:30 AM), so the step that feeds
+      # the model fetches through yesterday and --trim removes any later game a previous run left in the state. The last five days are re-fetched
+      # (so a corrected box score wins); earlier games are kept.
+      - name: Team game logs for the model (through yesterday)
+        run: python scripts/fetch_games_espn.py --season auto --out "data/games/team_games_{season}_Regular_Season.csv" --since-days 5 --keep --through yesterday --trim
+
+      # daily_projections.py reloads the odds table and takes its own snapshot when the newest one is old and games are still to come. The key
+      # is only given to it in live mode, so a shadow run can never spend credits.
+      - name: Today's projections
+        continue-on-error: true
+        run: python scripts/daily_projections.py --today
+        env:
+          ODDS_API_KEY: ${{ env.LIVE == 'true' && secrets.ODDS_API_KEY || '' }}
+
+      - name: Daily report file
+        continue-on-error: true
+        run: python scripts/export_picks.py
+
+      # Results, standings and the matchup ratings should be fresh, so the logs are brought up to today before the tables are built.
+      - name: Team game logs through today (for results and ratings)
+        run: python scripts/fetch_games_espn.py --season auto --out "data/games/team_games_{season}_Regular_Season.csv" --since-days 5 --keep
+
+      - name: Unified tables and picks
+        run: |
+          set -e
+          python _sportsdata/scripts/export_nba.py --nba-data data --out out/nba
+          python _sportsdata/scripts/export_nba_picks.py --daily reports/daily --out out/nba
+
+      # The matchup page's ratings come from this run too, built from the same game logs.
+      - name: Team ratings
+        run: NBA_MODEL_DIR="$PWD" python _site/scripts/build_ratings.py --out out/nba/team_ratings.json || echo "ratings not built; the published file stays"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: nba-output
+          path: |
+            out/nba
+            reports/daily
+            docs/daily
+          if-no-files-found: ignore
+          retention-days: 14
+
+      # ---- LIVE only ----
+      - name: Save the state
+        if: env.LIVE == 'true'
+        run: |
+          python scripts/cloud_state.py save --state _state
+          cd _state
+          git config user.name "nba-daily-bot"
+          git config user.email "nba-daily-bot@users.noreply.github.com"
+          git add -A
+          if ! git diff --cached --quiet; then
+            git commit -m "State after run $(date -u +%Y-%m-%dT%H:%MZ)"
+            git pull --rebase
+            git push origin HEAD:state
+          fi
+
+      - name: Publish to model-desk
+        if: env.LIVE == 'true'
+        run: |
+          set -e
+          [ -f out/nba/picks.csv ] || { echo "nothing to publish"; exit 0; }
+          mkdir -p _site/data/unified/nba
+          cp out/nba/picks.csv out/nba/reports.json out/nba/games.csv out/nba/teams.csv _site/data/unified/nba/
+          [ -f out/nba/team_ratings.json ] && cp out/nba/team_ratings.json _site/data/unified/nba/ || true
+          pip install -q fastapi==0.162.0 pydantic==2.14.3 httpx==0.28.1
+          python _site/scripts/check_data.py --data-dir _site/data
+          cd _site
+          git config user.name "nba-daily-bot"
+          git config user.email "nba-daily-bot@users.noreply.github.com"
+          git add data/unified/nba/picks.csv data/unified/nba/reports.json data/unified/nba/games.csv data/unified/nba/teams.csv
+          [ -f data/unified/nba/team_ratings.json ] && git add data/unified/nba/team_ratings.json || true
+          if ! git diff --cached --quiet; then
+            git commit -m "Data: nba picks updated $(date -u +%Y-%m-%d\ %H:%M) UTC (cloud run)"
+            for i in 1 2 3; do git pull --rebase -q && git push -q && break || sleep 5; done
+          fi
