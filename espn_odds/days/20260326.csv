@@ -1,0 +1,4 @@
+date,event_id,home,away,provider,spread_open,spread_close,total_open,total_close,ml_home_open,ml_home_close,ml_away_open,ml_away_close
+2026-03-26,401810918,CHA,NYK,DraftKings,1.5,-2.5,223.5,224.5,-108.0,-130.0,-112.0,110.0
+2026-03-26,401810919,DET,NOP,DraftKings,-5.5,-4.5,225.5,225.5,-218.0,-225.0,180.0,185.0
+2026-03-26,401810920,ORL,SAC,DraftKings,-15.5,-15.5,228.5,230.5,-1200.0,-1350.0,750.0,800.0

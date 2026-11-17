@@ -1,0 +1,5 @@
+date,event_id,home,away,provider,spread_open,spread_close,total_open,total_close,ml_home_open,ml_home_close,ml_away_open,ml_away_close
+2026-01-08,401810383,CHA,IND,DraftKings,-3.5,-4.5,234.5,232.5,-162.0,-185.0,136.0,154.0
+2026-01-08,401810384,CHI,MIA,DraftKings,5.5,,241.5,,180.0,,-218.0,
+2026-01-08,401810385,MIN,CLE,DraftKings,-3.5,-3.5,238.5,239.5,-155.0,-148.0,130.0,124.0
+2026-01-08,401810386,UTA,DAL,DraftKings,5.5,5.5,241.5,243.5,180.0,160.0,-218.0,-192.0

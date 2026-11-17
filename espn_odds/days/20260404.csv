@@ -1,0 +1,4 @@
+date,event_id,home,away,provider,spread_open,spread_close,total_open,total_close,ml_home_open,ml_home_close,ml_away_open,ml_away_close
+2026-04-04,401810984,MIA,WAS,DraftKings,-17.5,-18.5,247.5,245.5,-1800.0,-2400.0,1000.0,1200.0
+2026-04-04,401810985,DEN,SAS,DraftKings,2.5,1.5,243.5,244.5,110.0,105.0,-130.0,-125.0
+2026-04-04,401810986,PHI,DET,DraftKings,-1.5,3.5,226.5,225.5,-118.0,142.0,-102.0,-170.0

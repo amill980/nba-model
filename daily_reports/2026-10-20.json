@@ -1,0 +1,89 @@
+{
+ "schema_version": 1,
+ "source": "export_picks",
+ "date": "2026-10-20",
+ "snapshot_utc": "2026-10-20T16:13:12Z",
+ "as_of_local": "2026-10-20T12:13:12",
+ "flag_threshold": 1.5,
+ "games": [
+  {
+   "away_team": "BOS",
+   "home_team": "DET",
+   "tip_et": "15:00",
+   "model_home_spread": -2.0,
+   "market_home_spread": 1.5,
+   "gap": -3.5,
+   "lean": "Lean DET +1.5",
+   "model_total": 221.5,
+   "market_total": 220.5,
+   "total_gap": 1.0,
+   "total_lean": "",
+   "n_books": 9,
+   "spread_range": "+1.5 to +1.5",
+   "total_range": "220.5 to 221.5",
+   "best_bettable_spread": "betonlineag +1.5 (-110)",
+   "best_bettable_total": "",
+   "injury_report_out": "BOS Carter,Devin Out; DET Harkless,Elijah Out; DET Jones,Isaac Out; DET Onyenso,Ugonna Out; DET Prince,Taurean Out"
+  },
+  {
+   "away_team": "PHI",
+   "home_team": "NYK",
+   "tip_et": "19:00",
+   "model_home_spread": -8.5,
+   "market_home_spread": -4.5,
+   "gap": -4.0,
+   "lean": "Lean NYK -4.5",
+   "model_total": 228.4,
+   "market_total": 232.0,
+   "total_gap": -3.6,
+   "total_lean": "Lean Under",
+   "n_books": 9,
+   "spread_range": "-4.5 to -4.5",
+   "total_range": "231.5 to 232.5",
+   "best_bettable_spread": "betonlineag -4.5 (-110)",
+   "best_bettable_total": "betonlineag 232 (-110)",
+   "injury_report_out": "PHI Barlow,Dominick Out; PHI Fall,Tacko Out; PHI Hukporti,Ariel Out; PHI Wade,Dean Out"
+  },
+  {
+   "away_team": "OKC",
+   "home_team": "SAS",
+   "tip_et": "21:30",
+   "model_home_spread": 0.9,
+   "market_home_spread": -1.0,
+   "gap": 1.9,
+   "lean": "Lean OKC +1.0",
+   "model_total": 225.8,
+   "market_total": 231.5,
+   "total_gap": -5.7,
+   "total_lean": "Lean Under",
+   "n_books": 9,
+   "spread_range": "-1.5 to -0.5",
+   "total_range": "230.5 to 231.5",
+   "best_bettable_spread": "betonlineag +1 (-110)",
+   "best_bettable_total": "betonlineag 231.5 (-110)",
+   "injury_report_out": "OKC Oweh,Otega Out; OKC Sorber,Thomas Out; OKC Topic,Nikola Out; SAS Harris,Tobias Out; SAS Quaintance,Jayden Out"
+  }
+ ],
+ "disclaimers": {
+  "product": "**NOT A RECOMMENDATION. The v1 model has no demonstrated edge.** It failed its signed 2025-26 confirmation test. Closing-line value on spreads was +0.35 points against the pre-registered +0.5 bar (permutation p = 0.0006: a real but small effect), and on totals +0.03 points (p = 0.25). Settled against the closing line, its spread picks won 49.5% and its totals picks 49.4%. Its average error was 11.5 points against the market close's 10.9. This page only shows the model next to the market. Early in the season its ratings are almost entirely last season's, and it does not use injuries. The market line is the median across books, which can fall between two numbers nobody offers.",
+  "totals": "**TOTALS: NOT A RECOMMENDATION.** The totals model's closing-line value in the signed confirmation was +0.03 points (95% interval -0.21 to +0.25, p = 0.25), which is not distinguishable from zero. The pattern seen in discovery did not replicate. **There is no demonstrated totals edge.**"
+ },
+ "model_status": [
+  {
+   "component": "Spread",
+   "status": "No edge: closing-line value +0.35 pts vs the +0.5 bar; 49.5% against the close (2025-26, run once)"
+  },
+  {
+   "component": "Totals",
+   "status": "No edge: closing-line value +0.03 pts (p = 0.25); 49.4% against the close"
+  },
+  {
+   "component": "Injury information",
+   "status": "Tested: the closing line already prices it (docs/Injury_v2_findings.md). Shown for information; the model does not use it"
+  },
+  {
+   "component": "Live study",
+   "status": "Phase A (exploration) runs to 2026-12-15; the pre-registered Phase B starts 2026-12-16 (docs/Live_Study_Plan.md)"
+  }
+ ]
+}

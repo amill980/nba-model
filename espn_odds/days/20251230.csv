@@ -1,0 +1,5 @@
+date,event_id,home,away,provider,spread_open,spread_close,total_open,total_close,ml_home_open,ml_home_close,ml_away_open,ml_away_close
+2025-12-30,401810313,MEM,PHI,DraftKings,-1.5,1.5,233.5,235.5,-115.0,102.0,-105.0,-122.0
+2025-12-30,401810314,UTA,BOS,DraftKings,7.5,8.5,239.5,243.5,240.0,240.0,-298.0,-298.0
+2025-12-30,401810315,LAL,DET,DraftKings,2.5,2.5,231.5,233.5,114.0,124.0,-135.0,-148.0
+2025-12-30,401810316,LAC,SAC,DraftKings,-8.5,-9.5,223.5,218.5,-395.0,-375.0,310.0,295.0

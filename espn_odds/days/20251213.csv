@@ -1,0 +1,3 @@
+date,event_id,home,away,provider,spread_open,spread_close,total_open,total_close,ml_home_open,ml_home_close,ml_away_open,ml_away_close
+2025-12-13,401809837,ORL,NYK,DraftKings,3.5,3.5,224.5,225.5,140.0,150.0,-166.0,-180.0
+2025-12-13,401809838,OKC,SAS,DraftKings,-10.5,-10.5,226.5,233.5,-455.0,-575.0,350.0,425.0

@@ -1,0 +1,3 @@
+date,event_id,home,away,provider,spread_open,spread_close,total_open,total_close,ml_home_open,ml_home_close,ml_away_open,ml_away_close
+2024-12-14,401734906,MIL,ATL,ESPN BET,-3.5,-3.5,233.5,233.5,-155.0,-165.0,135.0,140.0
+2024-12-14,401734907,OKC,HOU,ESPN BET,-4.5,-5.5,215.5,214.5,-190.0,-225.0,160.0,190.0

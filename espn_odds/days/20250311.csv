@@ -1,0 +1,5 @@
+date,event_id,home,away,provider,spread_open,spread_close,total_open,total_close,ml_home_open,ml_home_close,ml_away_open,ml_away_close
+2025-03-11,401705506,CLE,BKN,ESPN BET,-17.5,-14.5,224.5,223.5,-2000.0,-900.0,1000.0,600.0
+2025-03-11,401705507,DET,WAS,ESPN BET,-13.5,-14.5,232.5,234.5,-1000.0,-1200.0,600.0,700.0
+2025-03-11,401705508,IND,MIL,ESPN BET,3.5,-1.5,231.5,237.5,130.0,-130.0,-150.0,110.0
+2025-03-11,401705509,NOP,LAC,ESPN BET,7.5,7.5,220.5,222.5,220.0,240.0,-270.0,-295.0

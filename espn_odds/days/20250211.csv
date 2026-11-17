@@ -1,0 +1,5 @@
+date,event_id,home,away,provider,spread_open,spread_close,total_open,total_close,ml_home_open,ml_home_close,ml_away_open,ml_away_close
+2025-02-11,401705330,PHI,TOR,ESPN BET,-7.5,-10.5,225.5,225.5,-300.0,-600.0,250.0,400.0
+2025-02-11,401705331,IND,NYK,ESPN BET,1.5,2.5,234.5,241.5,-110.0,110.0,-110.0,-130.0
+2025-02-11,401705332,CHI,DET,ESPN BET,3.5,5.5,236.5,237.5,125.0,165.0,-145.0,-195.0
+2025-02-11,401705333,PHX,MEM,ESPN BET,1.5,3.5,237.5,246.5,110.0,135.0,-130.0,-155.0

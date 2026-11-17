@@ -1,0 +1,4 @@
+date,event_id,home,away,provider,spread_open,spread_close,total_open,total_close,ml_home_open,ml_home_close,ml_away_open,ml_away_close
+2024-12-22,401704954,TOR,HOU,ESPN BET,7.5,8.5,220.5,222.5,270.0,300.0,-340.0,-390.0
+2024-12-22,401704955,SAC,IND,ESPN BET,-3.5,-3.5,235.5,234.5,-155.0,-140.0,135.0,120.0
+2024-12-22,401704956,NOP,DEN,ESPN BET,7.5,8.5,231.5,232.5,280.0,270.0,-360.0,-340.0

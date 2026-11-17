@@ -1,0 +1,5 @@
+date,event_id,home,away,provider,spread_open,spread_close,total_open,total_close,ml_home_open,ml_home_close,ml_away_open,ml_away_close
+2024-10-24,401704639,WAS,BOS,ESPN BET,13.5,14.5,234.5,230.5,600.0,650.0,-1000.0,-1000.0
+2024-10-24,401704640,DAL,SAS,ESPN BET,-7.5,-8.5,232.5,226.5,-320.0,-375.0,260.0,300.0
+2024-10-24,401704641,DEN,OKC,ESPN BET,-2.5,-2.5,225.5,228.5,-125.0,-130.0,105.0,110.0
+2024-10-24,401704642,SAC,MIN,ESPN BET,-1.5,-0.5,227.5,221.5,-120.0,-115.0,100.0,-105.0

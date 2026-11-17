@@ -1,0 +1,108 @@
+{
+ "schema_version": 1,
+ "source": "export_picks",
+ "date": "2026-11-12",
+ "snapshot_utc": "2026-11-13T00:05:04Z",
+ "as_of_local": "2026-11-12T19:05:04",
+ "flag_threshold": 1.5,
+ "games": [
+  {
+   "away_team": "TOR",
+   "home_team": "PHI",
+   "tip_et": "19:10",
+   "model_home_spread": -1.7,
+   "market_home_spread": -7.5,
+   "gap": 5.8,
+   "lean": "Lean TOR +7.5",
+   "model_total": 221.6,
+   "market_total": 224.0,
+   "total_gap": -2.4,
+   "total_lean": "Lean Under",
+   "n_books": 9,
+   "spread_range": "-8.5 to -7",
+   "total_range": "223.5 to 224.5",
+   "best_bettable_spread": "betonlineag +7.5 (-106)",
+   "best_bettable_total": "mybookieag 224.5 (-110)",
+   "injury_report_out": "PHI Barlow,Dominick Out; PHI Bona,Adem Out; PHI Hukporti,Ariel Out; PHI James,LeBron Out; TOR Barnes,Scottie Out; TOR Bittle,Nate Out; TOR Jackson-Davis,Trayce Out; TOR Leonard,Kawhi Out; TOR McCullarJr.,Kevin Out"
+  },
+  {
+   "away_team": "DET",
+   "home_team": "WAS",
+   "tip_et": "19:10",
+   "model_home_spread": 18.1,
+   "market_home_spread": 10.0,
+   "gap": 8.1,
+   "lean": "Lean DET -10.0",
+   "model_total": 222.1,
+   "market_total": 223.0,
+   "total_gap": -0.9,
+   "total_lean": "",
+   "n_books": 9,
+   "spread_range": "+9.5 to +10.5",
+   "total_range": "222.5 to 223.5",
+   "best_bettable_spread": "betonlineag -9.5 (-105)",
+   "best_bettable_total": "",
+   "injury_report_out": "DET Duren,Jalen Out; DET Joe,Isaiah Out; DET Lanier,Chaz Out; DET Okorie,Ebuka Out; DET Onyenso,Ugonna Out; WAS Beekman,Reece Out; WAS Champagnie,Justin Out; WAS Okpara,Felix Out; WAS Vukcevic,Tristan Out; WAS Watkins,Jamir Out"
+  },
+  {
+   "away_team": "DAL",
+   "home_team": "MIN",
+   "tip_et": "20:10",
+   "model_home_spread": -10.8,
+   "market_home_spread": -6.0,
+   "gap": -4.8,
+   "lean": "Lean MIN -6.0",
+   "model_total": 225.4,
+   "market_total": 226.0,
+   "total_gap": -0.6,
+   "total_lean": "",
+   "n_books": 9,
+   "spread_range": "-6.5 to -5.5",
+   "total_range": "225.5 to 226.5",
+   "best_bettable_spread": "lowvig -6 (-101)",
+   "best_bettable_total": "",
+   "injury_report_out": "DAL Biberovic,Tarik Out; DAL LivelyII,Dereck Out; DAL deLarrea,Sergio Out; MIN DiVincenzo,Donte Out; MIN Edwards,Anthony Out"
+  },
+  {
+   "away_team": "CHA",
+   "home_team": "PHX",
+   "tip_et": "21:10",
+   "model_home_spread": -1.9,
+   "market_home_spread": -6.5,
+   "gap": 4.6,
+   "lean": "Lean CHA +6.5",
+   "model_total": 220.4,
+   "market_total": 214.0,
+   "total_gap": 6.4,
+   "total_lean": "Lean Over",
+   "n_books": 9,
+   "spread_range": "-7.5 to -6.5",
+   "total_range": "214 to 214.5",
+   "best_bettable_spread": "lowvig +6.5 (-103)",
+   "best_bettable_total": "lowvig 214 (-107)",
+   "injury_report_out": "CHA Ajayi,Michael Out; CHA Boswell,Kylan Out; CHA Knueppel,Kon Out; CHA Miller,Brandon Out; CHA Schroder,Dennis Out; CHA Steinbach,Hannes Out; PHX Williams,Mark Out"
+  }
+ ],
+ "disclaimers": {
+  "product": "**NOT A RECOMMENDATION. The v1 model has no demonstrated edge.** It failed its signed 2025-26 confirmation test. Closing-line value on spreads was +0.35 points against the pre-registered +0.5 bar (permutation p = 0.0006: a real but small effect), and on totals +0.03 points (p = 0.25). Settled against the closing line, its spread picks won 49.5% and its totals picks 49.4%. Its average error was 11.5 points against the market close's 10.9. This page only shows the model next to the market. Early in the season its ratings are almost entirely last season's, and it does not use injuries. The market line is the median across books, which can fall between two numbers nobody offers.",
+  "totals": "**TOTALS: NOT A RECOMMENDATION.** The totals model's closing-line value in the signed confirmation was +0.03 points (95% interval -0.21 to +0.25, p = 0.25), which is not distinguishable from zero. The pattern seen in discovery did not replicate. **There is no demonstrated totals edge.**"
+ },
+ "model_status": [
+  {
+   "component": "Spread",
+   "status": "No edge: closing-line value +0.35 pts vs the +0.5 bar; 49.5% against the close (2025-26, run once)"
+  },
+  {
+   "component": "Totals",
+   "status": "No edge: closing-line value +0.03 pts (p = 0.25); 49.4% against the close"
+  },
+  {
+   "component": "Injury information",
+   "status": "Tested: the closing line already prices it (docs/Injury_v2_findings.md). Shown for information; the model does not use it"
+  },
+  {
+   "component": "Live study",
+   "status": "Phase A (exploration) runs to 2026-12-15; the pre-registered Phase B starts 2026-12-16 (docs/Live_Study_Plan.md)"
+  }
+ ]
+}

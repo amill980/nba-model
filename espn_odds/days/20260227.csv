@@ -1,0 +1,6 @@
+date,event_id,home,away,provider,spread_open,spread_close,total_open,total_close,ml_home_open,ml_home_close,ml_away_open,ml_away_close
+2026-02-27,401810713,DET,CLE,DraftKings,-7.5,-8.5,224.5,227.5,-278.0,-340.0,225.0,270.0
+2026-02-27,401810714,BOS,BKN,DraftKings,-16.5,-16.5,209.5,208.5,-1350.0,-1350.0,800.0,800.0
+2026-02-27,401810715,MIL,NYK,DraftKings,8.5,8.5,221.5,219.5,260.0,240.0,-325.0,-298.0
+2026-02-27,401810716,DAL,MEM,DraftKings,-5.5,-4.5,235.5,241.5,-205.0,-198.0,170.0,164.0
+2026-02-27,401810717,OKC,DEN,DraftKings,-8.5,-6.5,230.5,234.5,-325.0,-250.0,260.0,205.0

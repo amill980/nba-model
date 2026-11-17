@@ -1,0 +1,5 @@
+date,event_id,home,away,provider,spread_open,spread_close,total_open,total_close,ml_home_open,ml_home_close,ml_away_open,ml_away_close
+2026-02-02,401810567,CHA,NOP,DraftKings,-6.5,-6.5,235.5,230.5,-270.0,-278.0,220.0,225.0
+2026-02-02,401810568,IND,HOU,DraftKings,5.5,6.5,218.5,218.5,170.0,205.0,-205.0,-250.0
+2026-02-02,401810569,MEM,MIN,DraftKings,7.5,7.5,226.5,232.5,215.0,245.0,-265.0,-305.0
+2026-02-02,401810570,LAC,PHI,DraftKings,-2.5,1.5,221.5,220.5,-148.0,-105.0,124.0,-115.0

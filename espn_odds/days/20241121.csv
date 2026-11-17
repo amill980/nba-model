@@ -1,0 +1,5 @@
+date,event_id,home,away,provider,spread_open,spread_close,total_open,total_close,ml_home_open,ml_home_close,ml_away_open,ml_away_close
+2024-11-21,401704826,CHA,DET,ESPN BET,-1.5,2.5,218.5,222.5,-130.0,125.0,110.0,-150.0
+2024-11-21,401704827,TOR,MIN,ESPN BET,7.5,6.5,224.5,226.5,280.0,225.0,-360.0,-280.0
+2024-11-21,401704828,SAS,UTA,ESPN BET,9.5,-2.5,218.5,224.5,-175.0,-145.0,150.0,125.0
+2024-11-21,401704829,LAL,ORL,ESPN BET,-12.5,-5.5,219.5,215.5,-225.0,-215.0,190.0,180.0

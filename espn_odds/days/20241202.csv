@@ -1,0 +1,5 @@
+date,event_id,home,away,provider,spread_open,spread_close,total_open,total_close,ml_home_open,ml_home_close,ml_away_open,ml_away_close
+2024-12-02,401704881,ATL,NOP,ESPN BET,-5.5,-9.5,230.5,231.5,-250.0,-420.0,210.0,330.0
+2024-12-02,401704882,BOS,MIA,ESPN BET,-8.5,-9.5,223.5,220.5,-380.0,-425.0,290.0,320.0
+2024-12-02,401704883,CHI,BKN,ESPN BET,-5.5,-7.5,235.5,231.5,-200.0,-275.0,170.0,225.0
+2024-12-02,401704884,MIN,LAL,ESPN BET,-4.5,-7.5,225.5,219.5,-185.0,-300.0,155.0,245.0

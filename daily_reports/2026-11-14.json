@@ -1,0 +1,127 @@
+{
+ "schema_version": 1,
+ "source": "export_picks",
+ "date": "2026-11-14",
+ "snapshot_utc": "2026-11-14T16:45:06Z",
+ "as_of_local": "2026-11-14T11:45:06",
+ "flag_threshold": 1.5,
+ "games": [
+  {
+   "away_team": "DEN",
+   "home_team": "NOP",
+   "tip_et": "19:10",
+   "model_home_spread": 11.4,
+   "market_home_spread": 12.5,
+   "gap": -1.1,
+   "lean": "",
+   "model_total": 239.3,
+   "market_total": 234.0,
+   "total_gap": 5.3,
+   "total_lean": "Lean Over",
+   "n_books": 9,
+   "spread_range": "+12 to +12.5",
+   "total_range": "233.5 to 235",
+   "best_bettable_spread": "",
+   "best_bettable_total": "betonlineag 234 (-110)",
+   "injury_report_out": "DEN HolmesII,DaRon Out; DEN Nembhard,Ryan Out; DEN Strawther,Julian Out; DEN Whitmore,Cam Out"
+  },
+  {
+   "away_team": "DAL",
+   "home_team": "CLE",
+   "tip_et": "19:40",
+   "model_home_spread": -4.2,
+   "market_home_spread": 2.0,
+   "gap": -6.2,
+   "lean": "Lean CLE +2.0",
+   "model_total": 231.6,
+   "market_total": 231.5,
+   "total_gap": 0.1,
+   "total_lean": "",
+   "n_books": 9,
+   "spread_range": "+1.5 to +2.5",
+   "total_range": "231.5 to 231.5",
+   "best_bettable_spread": "betonlineag +2 (-110)",
+   "best_bettable_total": "",
+   "injury_report_out": "DAL Biberovic,Tarik Out; DAL LivelyII,Dereck Out; DAL deLarrea,Sergio Out"
+  },
+  {
+   "away_team": "CHI",
+   "home_team": "MIN",
+   "tip_et": "20:10",
+   "model_home_spread": -22.0,
+   "market_home_spread": -15.5,
+   "gap": -6.5,
+   "lean": "Lean MIN -15.5",
+   "model_total": 232.7,
+   "market_total": 235.5,
+   "total_gap": -2.8,
+   "total_lean": "Lean Under",
+   "n_books": 9,
+   "spread_range": "-15.5 to -15.5",
+   "total_range": "234.5 to 235.5",
+   "best_bettable_spread": "betonlineag -15.5 (-110)",
+   "best_bettable_total": "betonlineag 235.5 (-110)",
+   "injury_report_out": "MIN DiVincenzo,Donte Out; MIN Edwards,Anthony Out"
+  },
+  {
+   "away_team": "BKN",
+   "home_team": "MEM",
+   "tip_et": "20:10",
+   "model_home_spread": -7.8,
+   "market_home_spread": -3.0,
+   "gap": -4.8,
+   "lean": "Lean MEM -3.0",
+   "model_total": 226.1,
+   "market_total": 228.5,
+   "total_gap": -2.4,
+   "total_lean": "Lean Under",
+   "n_books": 9,
+   "spread_range": "-3.5 to -2.5",
+   "total_range": "228 to 228.5",
+   "best_bettable_spread": "betonlineag -3 (-112)",
+   "best_bettable_total": "bovada 228.5 (-105)",
+   "injury_report_out": "BKN Bilodeau,Tyler Out; BKN Jefferson,Joshua Out; BKN Nelson,Grant Out; BKN Saraf,Ben Out"
+  },
+  {
+   "away_team": "DET",
+   "home_team": "MIA",
+   "tip_et": "20:10",
+   "model_home_spread": 7.9,
+   "market_home_spread": 5.0,
+   "gap": 2.9,
+   "lean": "Lean DET -5.0",
+   "model_total": 228.8,
+   "market_total": 229.0,
+   "total_gap": -0.2,
+   "total_lean": "",
+   "n_books": 9,
+   "spread_range": "+4.5 to +5.5",
+   "total_range": "228.5 to 229.5",
+   "best_bettable_spread": "bovada -5 (-110)",
+   "best_bettable_total": "",
+   "injury_report_out": "DET Duren,Jalen Out; DET Joe,Isaiah Out; DET Lanier,Chaz Out; DET Okorie,Ebuka Out; DET Onyenso,Ugonna Out"
+  }
+ ],
+ "disclaimers": {
+  "product": "**NOT A RECOMMENDATION. The v1 model has no demonstrated edge.** It failed its signed 2025-26 confirmation test. Closing-line value on spreads was +0.35 points against the pre-registered +0.5 bar (permutation p = 0.0006: a real but small effect), and on totals +0.03 points (p = 0.25). Settled against the closing line, its spread picks won 49.5% and its totals picks 49.4%. Its average error was 11.5 points against the market close's 10.9. This page only shows the model next to the market. Early in the season its ratings are almost entirely last season's, and it does not use injuries. The market line is the median across books, which can fall between two numbers nobody offers.",
+  "totals": "**TOTALS: NOT A RECOMMENDATION.** The totals model's closing-line value in the signed confirmation was +0.03 points (95% interval -0.21 to +0.25, p = 0.25), which is not distinguishable from zero. The pattern seen in discovery did not replicate. **There is no demonstrated totals edge.**"
+ },
+ "model_status": [
+  {
+   "component": "Spread",
+   "status": "No edge: closing-line value +0.35 pts vs the +0.5 bar; 49.5% against the close (2025-26, run once)"
+  },
+  {
+   "component": "Totals",
+   "status": "No edge: closing-line value +0.03 pts (p = 0.25); 49.4% against the close"
+  },
+  {
+   "component": "Injury information",
+   "status": "Tested: the closing line already prices it (docs/Injury_v2_findings.md). Shown for information; the model does not use it"
+  },
+  {
+   "component": "Live study",
+   "status": "Phase A (exploration) runs to 2026-12-15; the pre-registered Phase B starts 2026-12-16 (docs/Live_Study_Plan.md)"
+  }
+ ]
+}

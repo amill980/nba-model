@@ -1,0 +1,4 @@
+date,event_id,home,away,provider,spread_open,spread_close,total_open,total_close,ml_home_open,ml_home_close,ml_away_open,ml_away_close
+2024-11-03,401704717,BKN,DET,ESPN BET,-2.5,-3.5,219.5,218.5,-145.0,-150.0,125.0,130.0
+2024-11-03,401704718,NOP,ATL,ESPN BET,-5.5,1.5,240.5,225.5,-220.0,100.0,190.0,-120.0
+2024-11-03,401704719,DAL,ORL,ESPN BET,-8.5,-6.5,232.5,220.5,-275.0,-275.0,225.0,225.0

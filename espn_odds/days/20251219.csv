@@ -1,0 +1,6 @@
+date,event_id,home,away,provider,spread_open,spread_close,total_open,total_close,ml_home_open,ml_home_close,ml_away_open,ml_away_close
+2025-12-19,401810236,BOS,MIA,DraftKings,-5.5,-7.5,233.5,233.5,-225.0,-305.0,185.0,245.0
+2025-12-19,401810237,NYK,PHI,DraftKings,-6.5,-6.5,228.5,230.5,-218.0,-245.0,180.0,200.0
+2025-12-19,401810238,ATL,SAS,DraftKings,2.5,3.5,242.5,238.5,110.0,142.0,-130.0,-170.0
+2025-12-19,401810239,CLE,CHI,DraftKings,-6.5,-4.5,239.5,238.5,-265.0,-180.0,215.0,150.0
+2025-12-19,401810240,MIN,OKC,DraftKings,7.5,5.5,226.5,232.5,260.0,210.0,-325.0,-258.0

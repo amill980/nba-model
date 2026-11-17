@@ -1,0 +1,5 @@
+date,event_id,home,away,provider,spread_open,spread_close,total_open,total_close,ml_home_open,ml_home_close,ml_away_open,ml_away_close
+2025-01-28,401705226,PHI,LAL,ESPN BET,3.5,4.5,219.5,218.5,145.0,155.0,-170.0,-190.0
+2025-01-28,401748705,ATL,HOU,ESPN BET,5.5,5.5,227.5,227.5,175.0,160.0,-210.0,-190.0
+2025-01-28,401705227,GSW,UTA,ESPN BET,-10.5,-10.5,227.5,220.5,-550.0,-470.0,380.0,350.0
+2025-01-28,401705228,POR,MIL,ESPN BET,6.5,5.5,230.5,232.5,200.0,185.0,-240.0,-220.0

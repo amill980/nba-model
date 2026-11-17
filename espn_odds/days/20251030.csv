@@ -1,0 +1,5 @@
+date,event_id,home,away,provider,spread_open,spread_close,total_open,total_close,ml_home_open,ml_home_close,ml_away_open,ml_away_close
+2025-10-30,401809993,CHA,ORL,ESPN BET,3.5,3.5,238.5,238.5,135.0,140.0,-155.0,-165.0
+2025-10-30,401809994,MIL,GSW,ESPN BET,1.5,7.5,231.5,228.5,125.0,240.0,-145.0,-290.0
+2025-10-30,401809995,OKC,WAS,ESPN BET,-16.5,-15.5,228.5,231.5,-1800.0,-1400.0,900.0,750.0
+2025-10-30,401809996,SAS,MIA,ESPN BET,-5.5,-5.5,231.5,228.5,-200.0,-225.0,170.0,190.0

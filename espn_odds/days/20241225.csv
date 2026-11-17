@@ -1,0 +1,5 @@
+date,event_id,home,away,provider,spread_open,spread_close,total_open,total_close,ml_home_open,ml_home_close,ml_away_open,ml_away_close
+2024-12-25,401704971,NYK,SAS,ESPN BET,-9.5,-8.5,226.5,223.5,-500.0,-370.0,360.0,290.0
+2024-12-25,401704973,BOS,PHI,ESPN BET,-4.5,-9.5,225.5,222.5,-300.0,-450.0,240.0,340.0
+2024-12-25,401704974,GSW,LAL,ESPN BET,-3.5,-4.5,235.5,220.5,-145.0,-170.0,125.0,145.0
+2024-12-25,401704975,PHX,DEN,ESPN BET,-1.5,2.5,226.5,232.5,-115.0,115.0,-105.0,-135.0

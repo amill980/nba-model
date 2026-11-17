@@ -1,0 +1,7 @@
+date,event_id,home,away,provider,spread_open,spread_close,total_open,total_close,ml_home_open,ml_home_close,ml_away_open,ml_away_close
+2025-11-25,401809799,WAS,ATL,DraftKings,10.5,10.5,236.5,240.5,,,,
+2025-11-25,401809799,WAS,ATL,ESPN BET,8.5,10.5,236.5,240.5,290.0,400.0,-380.0,-600.0
+2025-11-25,401809800,PHI,ORL,DraftKings,2.5,4.5,229.5,229.5,114.0,160.0,-135.0,-192.0
+2025-11-25,401809800,PHI,ORL,ESPN BET,1.5,4.5,229.5,229.5,-105.0,165.0,-115.0,-195.0
+2025-11-25,401809801,LAL,LAC,DraftKings,-5.5,-6.5,227.5,227.5,-230.0,-258.0,190.0,210.0
+2025-11-25,401809801,LAL,LAC,ESPN BET,-5.5,-6.5,227.5,227.5,-215.0,-275.0,180.0,225.0

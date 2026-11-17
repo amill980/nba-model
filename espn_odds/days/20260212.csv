@@ -1,0 +1,4 @@
+date,event_id,home,away,provider,spread_open,spread_close,total_open,total_close,ml_home_open,ml_home_close,ml_away_open,ml_away_close
+2026-02-12,401810644,OKC,MIL,DraftKings,-13.5,-13.5,216.5,214.5,-750.0,-625.0,525.0,455.0
+2026-02-12,401810645,UTA,POR,DraftKings,7.5,6.5,237.5,236.5,230.0,190.0,-285.0,-230.0
+2026-02-12,401810646,LAL,DAL,DraftKings,6.5,-6.5,234.5,237.5,190.0,-258.0,-230.0,210.0

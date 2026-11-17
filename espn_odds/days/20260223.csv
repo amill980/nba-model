@@ -1,0 +1,4 @@
+date,event_id,home,away,provider,spread_open,spread_close,total_open,total_close,ml_home_open,ml_home_close,ml_away_open,ml_away_close
+2026-02-23,401810683,DET,SAS,DraftKings,-2.5,-1.5,227.5,232.5,-135.0,-122.0,114.0,102.0
+2026-02-23,401810684,MEM,SAC,DraftKings,-4.5,-2.5,232.5,233.5,-180.0,-142.0,150.0,120.0
+2026-02-23,401810685,HOU,UTA,DraftKings,-15.5,-13.5,223.5,228.5,-1050.0,-850.0,675.0,575.0
