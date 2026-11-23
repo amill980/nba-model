@@ -1,0 +1,127 @@
+{
+ "schema_version": 1,
+ "source": "export_picks",
+ "date": "2026-11-22",
+ "snapshot_utc": "2026-11-22T01:01:47Z",
+ "as_of_local": "2026-11-21T20:01:47",
+ "flag_threshold": 1.5,
+ "games": [
+  {
+   "away_team": "DET",
+   "home_team": "ATL",
+   "tip_et": "15:40",
+   "model_home_spread": 2.4,
+   "market_home_spread": 2.25,
+   "gap": 0.15,
+   "lean": "",
+   "model_total": 224.7,
+   "market_total": 227.25,
+   "total_gap": -2.55,
+   "total_lean": "Lean Under",
+   "n_books": 8,
+   "spread_range": "+1.5 to +2.5",
+   "total_range": "226.5 to 227.5",
+   "best_bettable_spread": "",
+   "best_bettable_total": "bovada 227.5 (-110)",
+   "injury_report_out": "ATL Gueye,Mouhamed Out; ATL Landale,Jock Out; ATL McCollum,CJ Out; ATL Newell,Asa Out; ATL Veesaar,Henri Out; DET Duren,Jalen Out; DET Okorie,Ebuka Out; DET Onyenso,Ugonna Out; DET Prince,Taurean Out; DET Robinson,Duncan Out"
+  },
+  {
+   "away_team": "OKC",
+   "home_team": "MIA",
+   "tip_et": "18:10",
+   "model_home_spread": 1.2,
+   "market_home_spread": -2.5,
+   "gap": 3.7,
+   "lean": "Lean OKC +2.5",
+   "model_total": 229.9,
+   "market_total": 231.0,
+   "total_gap": -1.1,
+   "total_lean": "",
+   "n_books": 6,
+   "spread_range": "-2.5 to -2.5",
+   "total_range": "230.5 to 231.5",
+   "best_bettable_spread": "lowvig +2.5 (-106)",
+   "best_bettable_total": "",
+   "injury_report_out": "MIA Goldin,Vladislav Out; MIA Johnson,Keshad Out; OKC Caruso,Alex Out; OKC Holmgren,Chet Out; OKC Sorber,Thomas Out; OKC Topic,Nikola Out; OKC Wallace,Cason Out; OKC Williams,Jalen Out; OKC Williams,Jaylin Out"
+  },
+  {
+   "away_team": "DEN",
+   "home_team": "CHI",
+   "tip_et": "19:10",
+   "model_home_spread": 7.9,
+   "market_home_spread": 8.5,
+   "gap": -0.6,
+   "lean": "",
+   "model_total": 239.2,
+   "market_total": 237.5,
+   "total_gap": 1.7,
+   "total_lean": "Lean Over",
+   "n_books": 8,
+   "spread_range": "+8.5 to +8.5",
+   "total_range": "237 to 238.5",
+   "best_bettable_spread": "",
+   "best_bettable_total": "lowvig 237 (-107)",
+   "injury_report_out": "CHI Awaka,Tobe Out; CHI Robinson,Orlando Out; CHI Sellers,Jaylin Out; CHI Wilson,Caleb Out; DEN HolmesII,DaRon Out; DEN Hopkins,Bryce Out; DEN Strawther,Julian Out; DEN Whitmore,Cam Out"
+  },
+  {
+   "away_team": "ORL",
+   "home_team": "WAS",
+   "tip_et": "19:10",
+   "model_home_spread": 4.8,
+   "market_home_spread": 5.5,
+   "gap": -0.7,
+   "lean": "",
+   "model_total": 226.0,
+   "market_total": 221.5,
+   "total_gap": 4.5,
+   "total_lean": "Lean Over",
+   "n_books": 8,
+   "spread_range": "+5.5 to +5.5",
+   "total_range": "221 to 222.5",
+   "best_bettable_spread": "",
+   "best_bettable_total": "lowvig 221 (-107)",
+   "injury_report_out": "ORL Banchero,Paolo Out; ORL Isaac,Jonathan Out; ORL Nelson,Izaiyah Out; ORL Penda,Noah Out; WAS Beekman,Reece Out; WAS Champagnie,Justin Out; WAS Vukcevic,Tristan Out; WAS Watkins,Jamir Out"
+  },
+  {
+   "away_team": "BOS",
+   "home_team": "GSW",
+   "tip_et": "20:40",
+   "model_home_spread": 5.2,
+   "market_home_spread": 9.5,
+   "gap": -4.3,
+   "lean": "Lean GSW +9.5",
+   "model_total": 220.2,
+   "market_total": 212.5,
+   "total_gap": 7.7,
+   "total_lean": "Lean Over",
+   "n_books": 3,
+   "spread_range": "+9.5 to +9.5",
+   "total_range": "212.5 to 212.5",
+   "best_bettable_spread": "betonlineag +9.5 (-110)",
+   "best_bettable_total": "betonlineag 212.5 (-110)",
+   "injury_report_out": "GSW ButlerIII,Jimmy Out; GSW Curry,Stephen Out; GSW Moody,Moses Out; GSW Porzingis,Kristaps Out; GSW Williams,Brandon Out"
+  }
+ ],
+ "disclaimers": {
+  "product": "**NOT A RECOMMENDATION. The v1 model has no demonstrated edge.** It failed its signed 2025-26 confirmation test. Closing-line value on spreads was +0.35 points against the pre-registered +0.5 bar (permutation p = 0.0006: a real but small effect), and on totals +0.03 points (p = 0.25). Settled against the closing line, its spread picks won 49.5% and its totals picks 49.4%. Its average error was 11.5 points against the market close's 10.9. This page only shows the model next to the market. Early in the season its ratings are almost entirely last season's, and it does not use injuries. The market line is the median across books, which can fall between two numbers nobody offers.",
+  "totals": "**TOTALS: NOT A RECOMMENDATION.** The totals model's closing-line value in the signed confirmation was +0.03 points (95% interval -0.21 to +0.25, p = 0.25), which is not distinguishable from zero. The pattern seen in discovery did not replicate. **There is no demonstrated totals edge.**"
+ },
+ "model_status": [
+  {
+   "component": "Spread",
+   "status": "No edge: closing-line value +0.35 pts vs the +0.5 bar; 49.5% against the close (2025-26, run once)"
+  },
+  {
+   "component": "Totals",
+   "status": "No edge: closing-line value +0.03 pts (p = 0.25); 49.4% against the close"
+  },
+  {
+   "component": "Injury information",
+   "status": "Tested: the closing line already prices it (docs/Injury_v2_findings.md). Shown for information; the model does not use it"
+  },
+  {
+   "component": "Live study",
+   "status": "Phase A (exploration) runs to 2026-12-15; the pre-registered Phase B starts 2026-12-16 (docs/Live_Study_Plan.md)"
+  }
+ ]
+}

@@ -1,0 +1,127 @@
+{
+ "schema_version": 1,
+ "source": "export_picks",
+ "date": "2026-11-17",
+ "snapshot_utc": "2026-11-18T00:35:58Z",
+ "as_of_local": "2026-11-17T19:35:58",
+ "flag_threshold": 1.5,
+ "games": [
+  {
+   "away_team": "NYK",
+   "home_team": "TOR",
+   "tip_et": "19:40",
+   "model_home_spread": 2.4,
+   "market_home_spread": 2.5,
+   "gap": -0.1,
+   "lean": "",
+   "model_total": 218.4,
+   "market_total": 215.5,
+   "total_gap": 2.9,
+   "total_lean": "Lean Over",
+   "n_books": 9,
+   "spread_range": "+2 to +2.5",
+   "total_range": "214.5 to 216.5",
+   "best_bettable_spread": "",
+   "best_bettable_total": "mybookieag 215.5 (-110)",
+   "injury_report_out": "TOR Bittle,Nate Out; TOR Leonard,Kawhi Out; TOR McCullarJr.,Kevin Out; TOR Smith,Malachi Out"
+  },
+  {
+   "away_team": "DET",
+   "home_team": "SAS",
+   "tip_et": "20:10",
+   "model_home_spread": -4.9,
+   "market_home_spread": -10.0,
+   "gap": 5.1,
+   "lean": "Lean DET +10.0",
+   "model_total": 223.2,
+   "market_total": 222.0,
+   "total_gap": 1.2,
+   "total_lean": "",
+   "n_books": 9,
+   "spread_range": "-10.5 to -9.5",
+   "total_range": "221.5 to 222.5",
+   "best_bettable_spread": "lowvig +10 (-101)",
+   "best_bettable_total": "",
+   "injury_report_out": "DET Duren,Jalen Out; DET HollandII,Ronald Out; DET Joe,Isaiah Doubtful; DET Joe,Isaiah Out; DET Okorie,Ebuka Out; DET Onyenso,Ugonna Out; DET Prince,Taurean Out; DET Robinson,Duncan Out; SAS Brown,Maliq Out; SAS Gillespie,Ja'Kobi Out; SAS Harris,Tobias Out; SAS Quaintance,Jayden Out"
+  },
+  {
+   "away_team": "POR",
+   "home_team": "MIN",
+   "tip_et": "20:10",
+   "model_home_spread": -5.7,
+   "market_home_spread": -4.5,
+   "gap": -1.2,
+   "lean": "",
+   "model_total": 224.7,
+   "market_total": 226.0,
+   "total_gap": -1.3,
+   "total_lean": "",
+   "n_books": 9,
+   "spread_range": "-4.5 to -2.5",
+   "total_range": "225 to 226.5",
+   "best_bettable_spread": "",
+   "best_bettable_total": "",
+   "injury_report_out": "MIN Clark,Jaylen Out; MIN DiVincenzo,Donte Out; MIN Edwards,Anthony Out; MIN Kuminga,Jonathan Out; MIN Pullin,Zyon Out; POR Krejci,Vit Out; POR Morant,Ja Out; POR Sharpe,Shaedon Out; POR Youngblood,Chris Out"
+  },
+  {
+   "away_team": "UTA",
+   "home_team": "LAC",
+   "tip_et": "22:40",
+   "model_home_spread": -9.9,
+   "market_home_spread": -6.0,
+   "gap": -3.9,
+   "lean": "Lean LAC -6.0",
+   "model_total": 229.2,
+   "market_total": 226.0,
+   "total_gap": 3.2,
+   "total_lean": "Lean Over",
+   "n_books": 8,
+   "spread_range": "-6.5 to -6",
+   "total_range": "225.5 to 226.5",
+   "best_bettable_spread": "betonlineag -6 (-110)",
+   "best_bettable_total": "mybookieag 225.5 (-110)",
+   "injury_report_out": "LAC Beal,Bradley Out; LAC Ingram,Brandon Out; LAC Miller,Jordan Out; LAC Niederhauser,YanicKonan Out; UTA Bufkin,Kobe Out; UTA Hayes,Jaxson Out; UTA Ingram,Harrison Out; UTA JacksonJr.,Jaren Out; UTA Markkanen,Lauri Out; UTA Nurkic,Jusuf Out"
+  },
+  {
+   "away_team": "CHA",
+   "home_team": "LAL",
+   "tip_et": "23:10",
+   "model_home_spread": -11.3,
+   "market_home_spread": -7.0,
+   "gap": -4.3,
+   "lean": "Lean LAL -7.0",
+   "model_total": 225.7,
+   "market_total": 223.0,
+   "total_gap": 2.7,
+   "total_lean": "Lean Over",
+   "n_books": 9,
+   "spread_range": "-7.5 to -6.5",
+   "total_range": "222.5 to 223.5",
+   "best_bettable_spread": "betonlineag -7 (-110)",
+   "best_bettable_total": "bovada 222.5 (-110)",
+   "injury_report_out": "CHA Ajayi,Michael Out; CHA Boswell,Kylan Out; CHA Knueppel,Kon Out; CHA Schroder,Dennis Out; CHA Steinbach,Hannes Out; LAL Kessler,Walker Out; LAL Reaves,Austin Out"
+  }
+ ],
+ "disclaimers": {
+  "product": "**NOT A RECOMMENDATION. The v1 model has no demonstrated edge.** It failed its signed 2025-26 confirmation test. Closing-line value on spreads was +0.35 points against the pre-registered +0.5 bar (permutation p = 0.0006: a real but small effect), and on totals +0.03 points (p = 0.25). Settled against the closing line, its spread picks won 49.5% and its totals picks 49.4%. Its average error was 11.5 points against the market close's 10.9. This page only shows the model next to the market. Early in the season its ratings are almost entirely last season's, and it does not use injuries. The market line is the median across books, which can fall between two numbers nobody offers.",
+  "totals": "**TOTALS: NOT A RECOMMENDATION.** The totals model's closing-line value in the signed confirmation was +0.03 points (95% interval -0.21 to +0.25, p = 0.25), which is not distinguishable from zero. The pattern seen in discovery did not replicate. **There is no demonstrated totals edge.**"
+ },
+ "model_status": [
+  {
+   "component": "Spread",
+   "status": "No edge: closing-line value +0.35 pts vs the +0.5 bar; 49.5% against the close (2025-26, run once)"
+  },
+  {
+   "component": "Totals",
+   "status": "No edge: closing-line value +0.03 pts (p = 0.25); 49.4% against the close"
+  },
+  {
+   "component": "Injury information",
+   "status": "Tested: the closing line already prices it (docs/Injury_v2_findings.md). Shown for information; the model does not use it"
+  },
+  {
+   "component": "Live study",
+   "status": "Phase A (exploration) runs to 2026-12-15; the pre-registered Phase B starts 2026-12-16 (docs/Live_Study_Plan.md)"
+  }
+ ]
+}
