@@ -84,6 +84,13 @@ jobs:
         continue-on-error: true
         run: python scripts/export_picks.py
 
+      # For the website only: when the Odds API gave no lines (no credits left, or a shadow run), today's report is built with ESPN's own
+      # current line instead (scripts/espn_fallback_report.py). It never writes for a date that has a projections report, so the live
+      # study's output is never replaced or mixed with it.
+      - name: ESPN lines for the site when there is no projections report
+        continue-on-error: true
+        run: python scripts/espn_fallback_report.py
+
       # Results, standings and the matchup ratings should be fresh, so the logs are brought up to today before the tables are built.
       - name: Team game logs through today (for results and ratings)
         run: python scripts/fetch_games_espn.py --season auto --out "data/games/team_games_{season}_Regular_Season.csv" --since-days 5 --keep
